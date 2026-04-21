@@ -90,6 +90,7 @@
       "centre_content": "Centre content",
       "video_url": "Video URL",
       "hero_image": "Hero image (fallback)",
+      "hero_asset_alt": "Default hero image alt text",
       "copy": "Text overlay",
       "eyebrow": "Eyebrow text",
       "heading": "Heading",

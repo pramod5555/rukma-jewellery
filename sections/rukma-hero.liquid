@@ -27,7 +27,12 @@
           | image_tag: loading: 'eager', class: 'rukma-hero__bg'
         }}
       {%- else -%}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'rukma-hero__bg rukma-hero__placeholder rukma-hero__bg--placeholder' }}
+        <img
+          src="{{ 'rukma-hero.jpg' | asset_url }}"
+          alt="{{ section.settings.hero_asset_alt | escape }}"
+          loading="eager"
+          class="rukma-hero__bg"
+        >
       {%- endif -%}
 
       {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.cta_label != blank -%}
@@ -268,6 +273,12 @@
       "type": "image_picker",
       "id": "hero_image",
       "label": "t:sections.rukma_hero.hero_image"
+    },
+    {
+      "type": "text",
+      "id": "hero_asset_alt",
+      "label": "t:sections.rukma_hero.hero_asset_alt",
+      "default": "Model wearing Rukma jewellery"
     },
     {
       "type": "header",
