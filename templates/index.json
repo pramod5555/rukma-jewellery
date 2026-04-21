@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "rukma-hero": {
+      "type": "rukma-hero",
+      "settings": {
+        "eyebrow": "Heritage jewellery",
+        "heading": "Worn by memory",
+        "cta_label": "Explore the collection"
+      }
+    },
+    "rukma-products": {
+      "type": "rukma-products",
+      "settings": {
+        "heading": "New arrivals",
+        "product_count": 4
+      }
+    }
+  },
+  "order": [
+    "rukma-hero",
+    "rukma-products"
+  ]
+}

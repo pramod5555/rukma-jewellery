@@ -1,0 +1,245 @@
+<section class="rukma-hero full-width">
+  <div class="rukma-hero__grid">
+    <div class="rukma-hero__pillar rukma-hero__pillar--left">
+      {%- if section.settings.pillar_left_image -%}
+        {{ section.settings.pillar_left_image
+          | image_url: width: 800
+          | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
+        }}
+      {%- else -%}
+        {{ 'collection-1' | placeholder_svg_tag: 'rukma-hero__pillar-img' }}
+      {%- endif -%}
+    </div>
+
+    <div class="rukma-hero__center">
+      {%- if section.settings.video_url != blank -%}
+        <video
+          class="rukma-hero__bg"
+          src="{{ section.settings.video_url }}"
+          autoplay
+          muted
+          loop
+          playsinline
+        ></video>
+      {%- elsif section.settings.hero_image -%}
+        {{ section.settings.hero_image
+          | image_url: width: 1600
+          | image_tag: loading: 'eager', class: 'rukma-hero__bg'
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'rukma-hero__bg' }}
+      {%- endif -%}
+
+      <div class="rukma-hero__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="rukma-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="rukma-hero__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+          <a href="{{ section.settings.cta_url }}" class="rukma-hero__cta">
+            {{- section.settings.cta_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="rukma-hero__pillar rukma-hero__pillar--right">
+      {%- if section.settings.pillar_right_image -%}
+        {{ section.settings.pillar_right_image
+          | image_url: width: 800
+          | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
+        }}
+      {%- else -%}
+        {{ 'collection-2' | placeholder_svg_tag: 'rukma-hero__pillar-img' }}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-hero {
+    overflow: hidden;
+  }
+
+  .rukma-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    min-height: 92vh;
+    align-items: stretch;
+  }
+
+  .rukma-hero__pillar {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rukma-hero__pillar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .rukma-hero__center {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    background-color: var(--color-surface);
+  }
+
+  .rukma-hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .rukma-hero__copy {
+    position: relative;
+    z-index: 2;
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background: linear-gradient(to top, rgba(44, 36, 32, 0.55) 0%, transparent 60%);
+    width: 100%;
+  }
+
+  .rukma-hero__eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: #F5EDE0;
+    opacity: 0.85;
+  }
+
+  .rukma-hero__heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 4.5vw, 5rem);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    color: #F5EDE0;
+  }
+
+  .rukma-hero__cta {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: #F5EDE0;
+    border-bottom: 1px solid rgba(245, 237, 224, 0.6);
+    padding-bottom: 0.3rem;
+    align-self: flex-start;
+    transition: opacity 0.2s;
+  }
+
+  .rukma-hero__cta:hover {
+    opacity: 0.65;
+  }
+
+  @media (max-width: 768px) {
+    .rukma-hero__grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: unset;
+    }
+
+    .rukma-hero__pillar--left {
+      grid-column: 1;
+      grid-row: 1;
+      height: 45vw;
+    }
+
+    .rukma-hero__pillar--right {
+      grid-column: 2;
+      grid-row: 1;
+      height: 45vw;
+    }
+
+    .rukma-hero__center {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      min-height: 75vw;
+    }
+
+    .rukma-hero__copy {
+      padding: 2.5rem 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rukma_hero.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.rukma_hero.pillar_images"
+    },
+    {
+      "type": "image_picker",
+      "id": "pillar_left_image",
+      "label": "t:sections.rukma_hero.pillar_left"
+    },
+    {
+      "type": "image_picker",
+      "id": "pillar_right_image",
+      "label": "t:sections.rukma_hero.pillar_right"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.rukma_hero.centre_content"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "t:sections.rukma_hero.video_url"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "t:sections.rukma_hero.hero_image"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.rukma_hero.copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.rukma_hero.eyebrow",
+      "default": "Heritage jewellery"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.rukma_hero.heading",
+      "default": "Worn by memory"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:sections.rukma_hero.cta_label",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "t:sections.rukma_hero.cta_url"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rukma_hero.name"
+    }
+  ]
+}
+{% endschema %}
