@@ -7,7 +7,7 @@
           | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
         }}
       {%- else -%}
-        {{ 'collection-1' | placeholder_svg_tag: 'rukma-hero__pillar-img' }}
+        <div class="rukma-hero__pillar-placeholder">Pillar</div>
       {%- endif -%}
     </div>
 
@@ -27,10 +27,13 @@
           | image_tag: loading: 'eager', class: 'rukma-hero__bg'
         }}
       {%- else -%}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'rukma-hero__bg' }}
+        <div class="rukma-hero__film-placeholder">
+          <span>{{ section.settings.film_placeholder }}</span>
+        </div>
       {%- endif -%}
 
-      <div class="rukma-hero__copy">
+      {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.cta_label != blank -%}
+        <div class="rukma-hero__copy">
         {%- if section.settings.eyebrow != blank -%}
           <p class="rukma-hero__eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
@@ -42,7 +45,8 @@
             {{- section.settings.cta_label -}}
           </a>
         {%- endif -%}
-      </div>
+        </div>
+      {%- endif -%}
     </div>
 
     <div class="rukma-hero__pillar rukma-hero__pillar--right">
@@ -52,42 +56,67 @@
           | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
         }}
       {%- else -%}
-        {{ 'collection-2' | placeholder_svg_tag: 'rukma-hero__pillar-img' }}
+        <div class="rukma-hero__pillar-placeholder">Pillar</div>
       {%- endif -%}
     </div>
   </div>
+
+  {%- if section.settings.statement != blank -%}
+    <div class="rukma-hero__statement">
+      <p>{{ section.settings.statement }}</p>
+    </div>
+  {%- endif -%}
 </section>
 
 {% stylesheet %}
   .rukma-hero {
-    overflow: hidden;
+    background-color: var(--color-bg);
   }
 
   .rukma-hero__grid {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    min-height: 92vh;
+    grid-template-columns: 120px minmax(0, 1fr) 120px;
+    min-height: calc(100svh - 4.8rem);
     align-items: stretch;
   }
 
   .rukma-hero__pillar {
     position: relative;
-    overflow: hidden;
+    background-color: var(--color-surface);
   }
 
   .rukma-hero__pillar-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
+  }
+
+  .rukma-hero__pillar--right .rukma-hero__pillar-img {
+    transform: scaleX(-1);
+  }
+
+  .rukma-hero__pillar-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: rgba(44, 36, 32, 0.35);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
   }
 
   .rukma-hero__center {
     position: relative;
-    overflow: hidden;
+    min-width: 0;
     display: flex;
-    align-items: flex-end;
-    background-color: var(--color-surface);
+    align-items: center;
+    justify-content: center;
+    background-color: #1a0a08;
   }
 
   .rukma-hero__bg {
@@ -99,15 +128,35 @@
     display: block;
   }
 
+  .rukma-hero__film-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background-color: #1a0a08;
+  }
+
+  .rukma-hero__film-placeholder span {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    letter-spacing: 0.12em;
+    color: rgba(245, 237, 224, 0.78);
+    text-transform: uppercase;
+  }
+
   .rukma-hero__copy {
-    position: relative;
+    position: absolute;
+    left: 3rem;
+    right: 3rem;
+    bottom: 3rem;
     z-index: 2;
-    padding: 4rem 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    background: linear-gradient(to top, rgba(44, 36, 32, 0.55) 0%, transparent 60%);
-    width: 100%;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
   }
 
   .rukma-hero__eyebrow {
@@ -116,15 +165,16 @@
     letter-spacing: var(--letter-spacing-label);
     text-transform: uppercase;
     color: #F5EDE0;
-    opacity: 0.85;
+    opacity: 0.75;
   }
 
   .rukma-hero__heading {
     font-family: var(--font-heading);
     font-weight: 300;
-    font-size: clamp(2.5rem, 4.5vw, 5rem);
+    font-style: italic;
+    font-size: clamp(2.4rem, 4vw, 4rem);
     line-height: 1.0;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.05em;
     color: #F5EDE0;
   }
 
@@ -145,33 +195,48 @@
     opacity: 0.65;
   }
 
+  .rukma-hero__statement {
+    display: grid;
+    place-items: center;
+    min-height: 42vh;
+    padding: 120px var(--page-margin);
+    text-align: center;
+  }
+
+  .rukma-hero__statement p {
+    max-width: 16ch;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: 0.05em;
+    color: var(--color-text);
+  }
+
   @media (max-width: 768px) {
     .rukma-hero__grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 1fr;
-      min-height: unset;
+      grid-template-columns: 1fr;
+      min-height: 60vh;
     }
 
-    .rukma-hero__pillar--left {
-      grid-column: 1;
-      grid-row: 1;
-      height: 45vw;
-    }
-
-    .rukma-hero__pillar--right {
-      grid-column: 2;
-      grid-row: 1;
-      height: 45vw;
+    .rukma-hero__pillar {
+      display: none;
     }
 
     .rukma-hero__center {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      min-height: 75vw;
+      min-height: 60vh;
     }
 
     .rukma-hero__copy {
-      padding: 2.5rem 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      bottom: 2rem;
+    }
+
+    .rukma-hero__statement {
+      min-height: auto;
+      padding: 96px var(--page-margin);
     }
   }
 {% endstylesheet %}
@@ -209,6 +274,12 @@
       "label": "t:sections.rukma_hero.hero_image"
     },
     {
+      "type": "text",
+      "id": "film_placeholder",
+      "label": "t:sections.rukma_hero.film_placeholder",
+      "default": "Rukma"
+    },
+    {
       "type": "header",
       "content": "t:sections.rukma_hero.copy"
     },
@@ -222,7 +293,7 @@
       "type": "text",
       "id": "heading",
       "label": "t:sections.rukma_hero.heading",
-      "default": "Worn by memory"
+      "default": ""
     },
     {
       "type": "text",
@@ -234,6 +305,12 @@
       "type": "url",
       "id": "cta_url",
       "label": "t:sections.rukma_hero.cta_url"
+    },
+    {
+      "type": "text",
+      "id": "statement",
+      "label": "t:sections.rukma_hero.statement",
+      "default": "Heritage jewellery for the contemporary Indian"
     }
   ],
   "presets": [
