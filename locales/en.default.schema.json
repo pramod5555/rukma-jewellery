@@ -88,6 +88,7 @@
       "pillar_left": "Left pillar image",
       "pillar_right": "Right pillar image",
       "centre_content": "Centre content",
+      "use_custom_media": "Use custom hero media",
       "video_url": "Video URL",
       "hero_image": "Hero image (fallback)",
       "hero_asset_alt": "Default hero image alt text",

@@ -1,18 +1,16 @@
 <section class="rukma-hero full-width">
   <div class="rukma-hero__grid">
-    <div class="rukma-hero__pillar rukma-hero__pillar--left">
-      {%- if section.settings.pillar_left_image -%}
+    {%- if section.settings.pillar_left_image -%}
+      <div class="rukma-hero__pillar rukma-hero__pillar--left">
         {{ section.settings.pillar_left_image
           | image_url: width: 800
           | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
         }}
-      {%- else -%}
-        {{ 'collection-1' | placeholder_svg_tag: 'rukma-hero__pillar-img rukma-hero__placeholder' }}
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
 
     <div class="rukma-hero__center">
-      {%- if section.settings.video_url != blank -%}
+      {%- if section.settings.use_custom_media and section.settings.video_url != blank -%}
         <video
           class="rukma-hero__bg"
           src="{{ section.settings.video_url }}"
@@ -21,7 +19,7 @@
           loop
           playsinline
         ></video>
-      {%- elsif section.settings.hero_image -%}
+      {%- elsif section.settings.use_custom_media and section.settings.hero_image -%}
         {{ section.settings.hero_image
           | image_url: width: 1600
           | image_tag: loading: 'eager', class: 'rukma-hero__bg'
@@ -52,16 +50,14 @@
       {%- endif -%}
     </div>
 
-    <div class="rukma-hero__pillar rukma-hero__pillar--right">
-      {%- if section.settings.pillar_right_image -%}
+    {%- if section.settings.pillar_right_image -%}
+      <div class="rukma-hero__pillar rukma-hero__pillar--right">
         {{ section.settings.pillar_right_image
           | image_url: width: 800
           | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
         }}
-      {%- else -%}
-        {{ 'collection-2' | placeholder_svg_tag: 'rukma-hero__pillar-img rukma-hero__placeholder' }}
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
 
   {%- if section.settings.statement != blank -%}
@@ -263,6 +259,12 @@
     {
       "type": "header",
       "content": "t:sections.rukma_hero.centre_content"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom_media",
+      "label": "t:sections.rukma_hero.use_custom_media",
+      "default": false
     },
     {
       "type": "text",
