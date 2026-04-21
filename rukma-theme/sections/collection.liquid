@@ -1,0 +1,205 @@
+<section class="rukma-catalogue">
+  <div class="rukma-catalogue__header">
+    <h1 class="rukma-catalogue__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="rukma-catalogue__desc">{{ collection.description }}</p>
+    {%- endif -%}
+    <p class="rukma-catalogue__count">
+      {{ collection.products_count }}
+      {{- collection.products_count | pluralize: 'piece', 'pieces' -}}
+    </p>
+  </div>
+
+  {%- paginate collection.products by 12 -%}
+    {%- if collection.products_count > 0 -%}
+      <div class="rukma-catalogue__grid">
+        {%- for product in collection.products -%}
+          <a href="{{ product.url }}" class="rukma-product-card">
+            <div class="rukma-product-card__image-wrap">
+              {%- if product.featured_image -%}
+                {{ product.featured_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'rukma-product-card__image',
+                    alt: product.featured_image.alt | default: product.title
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'rukma-product-card__image' }}
+              {%- endif -%}
+            </div>
+            <div class="rukma-product-card__info">
+              <p class="rukma-product-card__title">{{ product.title }}</p>
+              <p class="rukma-product-card__price">
+                {%- if product.compare_at_price > product.price -%}
+                  <s class="rukma-product-card__was">{{ product.compare_at_price | money }}</s>
+                {%- endif -%}
+                {{- product.price | money -}}
+              </p>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <div class="rukma-catalogue__pagination">
+          {{ paginate | default_pagination }}
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <p class="rukma-catalogue__empty">{{ 'sections.rukma_catalogue.empty' | t }}</p>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% stylesheet %}
+  .rukma-catalogue {
+    padding: 5rem 0 8rem;
+  }
+
+  .rukma-catalogue__header {
+    margin-bottom: 4rem;
+  }
+
+  .rukma-catalogue__title {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+
+  .rukma-catalogue__desc {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    max-width: 52ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .rukma-catalogue__count {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-catalogue__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 48px;
+    row-gap: 80px;
+  }
+
+  /* Card — same tokens as rukma-products section */
+  .rukma-product-card {
+    display: block;
+    color: var(--color-text);
+    background: transparent;
+  }
+
+  .rukma-product-card__image-wrap {
+    aspect-ratio: 1 / 1;
+    background-color: #F5EDE0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    transition: background-color 0.4s ease;
+  }
+
+  .rukma-product-card:hover .rukma-product-card__image-wrap {
+    background-color: #EDE6D8;
+  }
+
+  .rukma-product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .rukma-product-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .rukma-product-card__title {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    color: #2C2420;
+  }
+
+  .rukma-product-card__price {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #8A7E76;
+  }
+
+  .rukma-product-card__was {
+    margin-right: 0.5rem;
+    opacity: 0.5;
+  }
+
+  /* Pagination */
+  .rukma-catalogue__pagination {
+    margin-top: 6rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-catalogue__pagination a,
+  .rukma-catalogue__pagination span {
+    padding: 0.5rem 0.75rem;
+    color: var(--color-text-secondary);
+    transition: color 0.2s;
+  }
+
+  .rukma-catalogue__pagination a:hover {
+    color: var(--color-text);
+  }
+
+  /* Empty state */
+  .rukma-catalogue__empty {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    padding: 4rem 0;
+  }
+
+  @media (max-width: 640px) {
+    .rukma-catalogue {
+      padding: 3rem 0 5rem;
+    }
+
+    .rukma-catalogue__grid {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 16px;
+      row-gap: 40px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.collection",
+  "settings": []
+}
+{% endschema %}

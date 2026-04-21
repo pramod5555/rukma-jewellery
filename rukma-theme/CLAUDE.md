@@ -1,0 +1,1 @@
+D:/rukma-jewellery/rukma-theme/AGENTS.md

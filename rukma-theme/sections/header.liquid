@@ -1,0 +1,276 @@
+<header class="rukma-header" role="banner">
+  <div class="rukma-header__inner">
+    <a href="{{ routes.root_url }}" class="rukma-header__logo">
+      {{ shop.name }}
+    </a>
+
+    <nav class="rukma-header__nav" aria-label="{{ 'general.navigation.main' | t }}">
+      {%- for link in section.settings.menu.links -%}
+        <a
+          href="{{ link.url }}"
+          class="rukma-header__nav-link{% if link.active %} is-active{% endif %}"
+        >{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="rukma-header__actions">
+      <a href="{{ routes.cart_url }}" class="rukma-header__cart" aria-label="{{ 'cart.title' | t }}">
+        {%- if cart.item_count > 0 -%}
+          <span class="rukma-header__cart-count">{{ cart.item_count }}</span>
+        {%- endif -%}
+        {{ 'icon-cart.svg' | inline_asset_content }}
+      </a>
+
+      <button
+        class="rukma-header__hamburger"
+        aria-label="{{ 'general.navigation.open_menu' | t }}"
+        aria-expanded="false"
+        aria-controls="rukma-nav-overlay"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div
+  class="rukma-nav-overlay"
+  id="rukma-nav-overlay"
+  role="dialog"
+  aria-label="{{ 'general.navigation.main' | t }}"
+  aria-modal="true"
+  hidden
+>
+  <div class="rukma-nav-overlay__inner">
+    <div class="rukma-nav-overlay__top">
+      <span class="rukma-nav-overlay__brand">{{ shop.name }}</span>
+      <button
+        class="rukma-nav-overlay__close"
+        aria-label="{{ 'general.navigation.close_menu' | t }}"
+      >&#x2715;</button>
+    </div>
+    <nav class="rukma-nav-overlay__nav">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}" class="rukma-nav-overlay__link">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+  </div>
+</div>
+
+{% stylesheet %}
+  .rukma-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg);
+  }
+
+  .rukma-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.75rem var(--page-margin);
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  .rukma-header__logo {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.1rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .rukma-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .rukma-header__nav-link {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: var(--color-text);
+    transition: color 0.2s;
+  }
+
+  .rukma-header__nav-link.is-active,
+  .rukma-header__nav-link:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .rukma-header__cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--color-text);
+  }
+
+  .rukma-header__cart svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .rukma-header__cart-count {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-header__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 0;
+  }
+
+  .rukma-header__hamburger span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background-color: var(--color-text);
+    transition: opacity 0.2s;
+  }
+
+  /* Mobile overlay */
+  .rukma-nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background-color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rukma-nav-overlay[hidden] {
+    display: none;
+  }
+
+  .rukma-nav-overlay__inner {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem var(--page-margin);
+    height: 100%;
+  }
+
+  .rukma-nav-overlay__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+
+  .rukma-nav-overlay__brand {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.1rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .rukma-nav-overlay__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    padding: 0;
+    line-height: 1;
+  }
+
+  .rukma-nav-overlay__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  .rukma-nav-overlay__link {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(2.25rem, 9vw, 3.5rem);
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .rukma-nav-overlay__link:hover {
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .rukma-header__nav {
+      display: none;
+    }
+
+    .rukma-header__hamburger {
+      display: flex;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    const hamburger = document.querySelector('.rukma-header__hamburger');
+    const overlay = document.getElementById('rukma-nav-overlay');
+    const closeBtn = overlay.querySelector('.rukma-nav-overlay__close');
+
+    function openMenu() {
+      overlay.hidden = false;
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      overlay.hidden = true;
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !overlay.hidden) closeMenu();
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "t:labels.customer_account_menu",
+      "default": "customer-account-main-menu"
+    }
+  ]
+}
+{% endschema %}
