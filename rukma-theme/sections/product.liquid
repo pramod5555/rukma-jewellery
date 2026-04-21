@@ -4,30 +4,50 @@
     background-color: #731C28 !important;
     color: #F5EDE0 !important;
   }
-  .rukma-header,
-  header,
-  nav {
-    background-color: transparent !important;
-    color: #F5EDE0 !important;
+
+  /* Position header over velvet — only the header wrapper, not nav children */
+  .rukma-header {
     position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
     width: 100% !important;
+    background-color: transparent !important;
   }
-  .rukma-header a,
-  header a,
-  nav a {
+
+  /* Cream text for all header children */
+  .rukma-header__logo,
+  .rukma-header__nav-link,
+  .rukma-header__cart {
     color: #F5EDE0 !important;
   }
-  .rukma-header svg,
-  header svg {
+
+  .rukma-header__nav-link:hover,
+  .rukma-header__nav-link.is-active {
+    color: rgba(245, 237, 224, 0.55) !important;
+  }
+
+  .rukma-header svg {
     stroke: #F5EDE0 !important;
     fill: none !important;
   }
+
   .rukma-header__hamburger span {
     background-color: #F5EDE0 !important;
   }
-  .rukma-header__nav-link:hover,
-  .rukma-header__nav-link.is-active {
+
+  /* Remove any background from the image area */
+  .rukma-pdp__media,
+  .rukma-pdp__image-wrap {
+    background: transparent !important;
+  }
+
+  /* Sold out: ghost button on dark background */
+  .rukma-pdp__add-btn:disabled {
+    background-color: transparent !important;
+    border: 1px solid rgba(245, 237, 224, 0.4) !important;
     color: rgba(245, 237, 224, 0.6) !important;
+    opacity: 1 !important;
   }
 </style>
 {% endif %}
@@ -165,6 +185,7 @@
     justify-content: center;
     padding: 2rem;
     overflow: hidden;
+    background: transparent;
   }
 
   .rukma-pdp__image-wrap {
@@ -172,6 +193,9 @@
     width: 100%;
     align-items: center;
     justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
   }
 
   .rukma-pdp__image-wrap.is-active {
@@ -322,7 +346,10 @@
   }
 
   .rukma-pdp__add-btn:disabled {
-    opacity: 0.35;
+    background-color: transparent;
+    border: 1px solid rgba(245, 237, 224, 0.4);
+    color: rgba(245, 237, 224, 0.6);
+    opacity: 1;
     cursor: not-allowed;
   }
 
