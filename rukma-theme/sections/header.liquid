@@ -1,16 +1,30 @@
 <header class="rukma-header" role="banner">
   <div class="rukma-header__inner">
     <a href="{{ routes.root_url }}" class="rukma-header__logo">
-      {{ shop.name }}
+      {{ section.settings.logo_text | default: 'RUKMA' }}
     </a>
 
     <nav class="rukma-header__nav" aria-label="{{ 'general.navigation.main' | t }}">
-      {%- for link in section.settings.menu.links -%}
-        <a
-          href="{{ link.url }}"
-          class="rukma-header__nav-link{% if link.active %} is-active{% endif %}"
-        >{{ link.title }}</a>
-      {%- endfor -%}
+      {%- if section.settings.use_shopify_menu -%}
+        {%- if section.settings.menu.links.size > 0 -%}
+          {%- for link in section.settings.menu.links -%}
+            <a
+              href="{{ link.url }}"
+              class="rukma-header__nav-link{% if link.active %} is-active{% endif %}"
+            >{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="/collections/all" class="rukma-header__nav-link">Shop</a>
+          <a href="/collections" class="rukma-header__nav-link">Collections</a>
+          <a href="/pages/our-story" class="rukma-header__nav-link">Our Story</a>
+          <a href="/pages/bespoke" class="rukma-header__nav-link">Bespoke</a>
+        {%- endif -%}
+      {%- else -%}
+        <a href="/collections/all" class="rukma-header__nav-link">Shop</a>
+        <a href="/collections" class="rukma-header__nav-link">Collections</a>
+        <a href="/pages/our-story" class="rukma-header__nav-link">Our Story</a>
+        <a href="/pages/bespoke" class="rukma-header__nav-link">Bespoke</a>
+      {%- endif -%}
     </nav>
 
     <div class="rukma-header__actions">
@@ -43,16 +57,30 @@
 >
   <div class="rukma-nav-overlay__inner">
     <div class="rukma-nav-overlay__top">
-      <span class="rukma-nav-overlay__brand">{{ shop.name }}</span>
+      <span class="rukma-nav-overlay__brand">{{ section.settings.logo_text | default: 'RUKMA' }}</span>
       <button
         class="rukma-nav-overlay__close"
         aria-label="{{ 'general.navigation.close_menu' | t }}"
       >&#x2715;</button>
     </div>
     <nav class="rukma-nav-overlay__nav">
-      {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}" class="rukma-nav-overlay__link">{{ link.title }}</a>
-      {%- endfor -%}
+      {%- if section.settings.use_shopify_menu -%}
+        {%- if section.settings.menu.links.size > 0 -%}
+          {%- for link in section.settings.menu.links -%}
+            <a href="{{ link.url }}" class="rukma-nav-overlay__link">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="/collections/all" class="rukma-nav-overlay__link">Shop</a>
+          <a href="/collections" class="rukma-nav-overlay__link">Collections</a>
+          <a href="/pages/our-story" class="rukma-nav-overlay__link">Our Story</a>
+          <a href="/pages/bespoke" class="rukma-nav-overlay__link">Bespoke</a>
+        {%- endif -%}
+      {%- else -%}
+        <a href="/collections/all" class="rukma-nav-overlay__link">Shop</a>
+        <a href="/collections" class="rukma-nav-overlay__link">Collections</a>
+        <a href="/pages/our-story" class="rukma-nav-overlay__link">Our Story</a>
+        <a href="/pages/bespoke" class="rukma-nav-overlay__link">Bespoke</a>
+      {%- endif -%}
     </nav>
   </div>
 </div>
@@ -66,9 +94,10 @@
   }
 
   .rukma-header__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(9rem, 1fr) minmax(0, auto) minmax(4rem, 1fr);
     align-items: center;
-    justify-content: space-between;
+    gap: 2rem;
     padding: 1.75rem var(--page-margin);
     max-width: var(--page-width);
     margin: 0 auto;
@@ -77,16 +106,20 @@
   .rukma-header__logo {
     font-family: var(--font-heading);
     font-weight: 300;
-    font-size: 1.1rem;
-    letter-spacing: 0.18em;
+    font-size: 1rem;
+    letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--color-text);
+    justify-self: start;
+    white-space: nowrap;
   }
 
   .rukma-header__nav {
     display: flex;
     align-items: center;
     gap: 2.5rem;
+    justify-content: center;
+    min-width: 0;
   }
 
   .rukma-header__nav-link {
@@ -107,6 +140,7 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    justify-self: end;
   }
 
   .rukma-header__cart {
@@ -181,7 +215,7 @@
     font-family: var(--font-heading);
     font-weight: 300;
     font-size: 1.1rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--color-text);
   }
@@ -219,6 +253,18 @@
   }
 
   @media (max-width: 768px) {
+    .rukma-header__inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .rukma-header__logo {
+      font-size: 0.95rem;
+      letter-spacing: 0.32em;
+      min-width: 0;
+    }
+
     .rukma-header__nav {
       display: none;
     }
@@ -259,6 +305,18 @@
 {
   "name": "t:general.header",
   "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "t:labels.logo_text",
+      "default": "RUKMA"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_shopify_menu",
+      "label": "t:labels.use_shopify_menu",
+      "default": false
+    },
     {
       "type": "link_list",
       "id": "menu",

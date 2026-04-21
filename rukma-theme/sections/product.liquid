@@ -40,6 +40,8 @@
   .rukma-pdp__media,
   .rukma-pdp__image-wrap {
     background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
   }
 
   /* Sold out: ghost button on dark background */
@@ -183,8 +185,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
-    overflow: hidden;
+    padding: 0 2rem;
+    overflow: visible;
     background: transparent;
   }
 
@@ -196,6 +198,7 @@
     background: transparent;
     border: none;
     padding: 0;
+    overflow: visible;
   }
 
   .rukma-pdp__image-wrap.is-active {
@@ -208,6 +211,7 @@
     object-fit: contain;
     display: block;
     background: transparent;
+    box-shadow: none;
   }
 
   .rukma-pdp__thumbs {
@@ -221,7 +225,7 @@
   .rukma-pdp__thumb {
     width: 3rem;
     height: 3rem;
-    overflow: hidden;
+    overflow: visible;
     background: none;
     border: 1px solid rgba(245, 237, 224, 0.2);
     cursor: pointer;
@@ -237,7 +241,7 @@
   .rukma-pdp__thumb img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
 
@@ -424,7 +428,7 @@
     .rukma-pdp__media {
       position: relative;
       height: auto;
-      padding: 2rem 1.5rem 1rem;
+      padding: 1rem 1.5rem 0;
     }
 
     .rukma-pdp__image {

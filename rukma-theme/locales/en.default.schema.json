@@ -43,6 +43,7 @@
     "heading": "Heading",
     "input_corner_radius": "Input corner radius",
     "layout_direction": "Layout direction",
+    "logo_text": "Logo text",
     "menu": "Menu",
     "customer_account_menu": "Customer account menu",
     "padding": "Padding",
@@ -50,7 +51,8 @@
     "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
     "text_style": "Text style",
-    "text": "Text"
+    "text": "Text",
+    "use_shopify_menu": "Use Shopify menu"
   },
   "options": {
     "alignment": {
@@ -85,11 +87,13 @@
       "centre_content": "Centre content",
       "video_url": "Video URL",
       "hero_image": "Hero image (fallback)",
+      "film_placeholder": "Film placeholder text",
       "copy": "Text overlay",
       "eyebrow": "Eyebrow text",
       "heading": "Heading",
       "cta_label": "Button label",
-      "cta_url": "Button link"
+      "cta_url": "Button link",
+      "statement": "Statement"
     },
     "rukma_products": {
       "name": "Product grid",

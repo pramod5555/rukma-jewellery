@@ -4,8 +4,10 @@
       "type": "rukma-hero",
       "settings": {
         "eyebrow": "Heritage jewellery",
-        "heading": "Worn by memory",
-        "cta_label": "Explore the collection"
+        "heading": "",
+        "film_placeholder": "Rukma",
+        "cta_label": "Explore the collection",
+        "statement": "Heritage jewellery for the contemporary Indian"
       }
     },
     "rukma-products": {
