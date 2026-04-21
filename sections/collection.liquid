@@ -18,7 +18,7 @@
             <div class="rukma-product-card__image-wrap">
               {%- if product.featured_image -%}
                 {{ product.featured_image
-                  | image_url: width: 1200
+                  | image_url: width: 700
                   | image_tag:
                     loading: 'lazy',
                     class: 'rukma-product-card__image',
@@ -89,9 +89,9 @@
 
   .rukma-catalogue__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 48px;
-    row-gap: 80px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 32px;
+    row-gap: 56px;
   }
 
   /* Card — same tokens as rukma-products section */
@@ -184,13 +184,21 @@
     padding: 4rem 0;
   }
 
+  @media (max-width: 1024px) {
+    .rukma-catalogue__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 24px;
+      row-gap: 48px;
+    }
+  }
+
   @media (max-width: 640px) {
     .rukma-catalogue {
       padding: 3rem 0 5rem;
     }
 
     .rukma-catalogue__grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       column-gap: 16px;
       row-gap: 40px;
     }
