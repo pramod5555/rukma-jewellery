@@ -7,7 +7,7 @@
           | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
         }}
       {%- else -%}
-        {{ 'collection-1' | placeholder_svg_tag: 'rukma-hero__pillar-img' }}
+        {{ 'collection-1' | placeholder_svg_tag: 'rukma-hero__pillar-img rukma-hero__placeholder' }}
       {%- endif -%}
     </div>
 
@@ -27,7 +27,7 @@
           | image_tag: loading: 'eager', class: 'rukma-hero__bg'
         }}
       {%- else -%}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'rukma-hero__bg rukma-hero__bg--placeholder' }}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'rukma-hero__bg rukma-hero__placeholder rukma-hero__bg--placeholder' }}
       {%- endif -%}
 
       {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.cta_label != blank -%}
@@ -54,7 +54,7 @@
           | image_tag: loading: 'eager', class: 'rukma-hero__pillar-img'
         }}
       {%- else -%}
-        {{ 'collection-2' | placeholder_svg_tag: 'rukma-hero__pillar-img' }}
+        {{ 'collection-2' | placeholder_svg_tag: 'rukma-hero__pillar-img rukma-hero__placeholder' }}
       {%- endif -%}
     </div>
   </div>
@@ -81,12 +81,13 @@
   .rukma-hero__pillar {
     position: relative;
     background-color: var(--color-surface);
+    overflow: hidden;
   }
 
   .rukma-hero__pillar-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
   }
 
@@ -115,6 +116,17 @@
   .rukma-hero__bg--placeholder {
     background-color: var(--color-surface);
     color: rgba(44, 36, 32, 0.24);
+  }
+
+  .rukma-hero__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+
+  .rukma-hero__placeholder path,
+  .rukma-hero__placeholder rect,
+  .rukma-hero__placeholder circle {
+    vector-effect: non-scaling-stroke;
   }
 
   .rukma-hero__copy {

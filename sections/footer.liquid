@@ -1,39 +1,197 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+{%- assign footer_statement = section.settings.statement | default: 'Heritage jewellery for the contemporary Indian' -%}
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+<footer class="rukma-footer">
+  <div class="rukma-footer__inner">
+    <div class="rukma-footer__brand">
+      <a href="{{ routes.root_url }}" class="rukma-footer__logo">
+        {{ section.settings.logo_text | default: 'RUKMA' }}
+      </a>
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+      {%- if footer_statement != blank -%}
+        <p class="rukma-footer__statement">{{ footer_statement }}</p>
+      {%- endif -%}
+    </div>
+
+    <nav class="rukma-footer__links" aria-label="{{ 'general.navigation.footer' | t }}">
+      {%- if section.settings.menu.links.size > 0 -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="/collections/all">Shop</a>
+        <a href="/collections">Collections</a>
+        <a href="/pages/our-story">Our Story</a>
+        <a href="/pages/bespoke">Bespoke</a>
+        <a href="/pages/contact">Contact</a>
+      {%- endif -%}
+    </nav>
+
+    <div class="rukma-footer__meta">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+
+      {%- if section.settings.show_payment_icons -%}
+        <div class="rukma-footer__payment" aria-label="{{ 'cart.checkout' | t }}">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag }}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 </footer>
 
+{%- if section.settings.whatsapp_number != blank -%}
+  <a
+    href="https://wa.me/{{ section.settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')' }}"
+    class="rukma-whatsapp"
+    aria-label="{{ section.settings.whatsapp_label | escape }}"
+    target="_blank"
+    rel="noopener"
+  >
+    <span class="rukma-whatsapp__mark" aria-hidden="true">WA</span>
+    <span class="rukma-whatsapp__label">{{ section.settings.whatsapp_label }}</span>
+  </a>
+{%- endif -%}
+
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+  .rukma-footer {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    margin-top: 120px;
   }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
+
+  .template--product .rukma-footer {
+    margin-top: 0;
   }
-  footer .footer__links,
-  footer .footer__payment {
+
+  .rukma-footer__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(10rem, 0.8fr) minmax(12rem, 0.8fr);
+    gap: 4rem;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 80px var(--page-margin);
+  }
+
+  .rukma-footer__brand {
     display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .rukma-footer__logo {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--color-velvet);
+    align-self: flex-start;
+  }
+
+  .rukma-footer__statement {
+    max-width: 15ch;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: 0.05em;
+    color: var(--color-text);
+  }
+
+  .rukma-footer__links,
+  .rukma-footer__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-footer__links a {
+    color: var(--color-text);
+    transition: color 0.2s;
+  }
+
+  .rukma-footer__links a:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-footer__payment {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-width: 16rem;
+  }
+
+  .rukma-footer__payment svg {
+    width: 2rem;
+    height: auto;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-whatsapp {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 180;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.8rem 1rem;
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+  }
+
+  .rukma-whatsapp__mark {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+  }
+
+  .rukma-whatsapp__label {
+    white-space: nowrap;
+  }
+
+  .template--product .rukma-whatsapp {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .rukma-footer {
+      margin-top: 96px;
+    }
+
+    .rukma-footer__inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding: 72px var(--page-margin);
+    }
+
+    .rukma-footer__statement {
+      max-width: 12ch;
+    }
+
+    .rukma-whatsapp {
+      right: 16px;
+      bottom: 16px;
+      padding: 0.85rem;
+    }
+
+    .rukma-whatsapp__label {
+      display: none;
+    }
   }
 {% endstylesheet %}
 
@@ -41,6 +199,18 @@
 {
   "name": "t:general.footer",
   "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "t:labels.logo_text",
+      "default": "RUKMA"
+    },
+    {
+      "type": "text",
+      "id": "statement",
+      "label": "t:labels.statement",
+      "default": "Heritage jewellery for the contemporary Indian"
+    },
     {
       "type": "link_list",
       "id": "menu",
@@ -51,6 +221,17 @@
       "id": "show_payment_icons",
       "label": "t:labels.show_payment_icons",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "t:labels.whatsapp_number"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "t:labels.whatsapp_label",
+      "default": "WhatsApp"
     }
   ]
 }

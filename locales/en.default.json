@@ -33,6 +33,7 @@
   "general": {
     "navigation": {
       "main": "Main navigation",
+      "footer": "Footer navigation",
       "open_menu": "Open navigation menu",
       "close_menu": "Close navigation menu"
     }
