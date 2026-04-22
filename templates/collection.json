@@ -1,20 +1,71 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "collection",
-      "settings": {}
+    "rukma-collection-listing": {
+      "type": "rukma-collection-listing",
+      "blocks": {
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "featured": true,
+            "badge": "New",
+            "title": "Mandala Heritage Choker",
+            "subtitle": "Gold & Burmese Rubies",
+            "price": "$4,250"
+          }
+        },
+        "product-2": {
+          "type": "product",
+          "settings": {
+            "title": "Lotus Bloom Studs",
+            "subtitle": "22k Gold & Basra Pearl",
+            "price": "$890"
+          }
+        },
+        "product-3": {
+          "type": "product",
+          "settings": {
+            "title": "Vayu Kada Bracelet",
+            "subtitle": "Gold & Zambian Emerald",
+            "price": "$1,550"
+          }
+        },
+        "product-4": {
+          "type": "product",
+          "settings": {
+            "title": "Prithvi Uncut Ring",
+            "subtitle": "Polki Diamond",
+            "price": "$2,100"
+          }
+        },
+        "product-5": {
+          "type": "product",
+          "settings": {
+            "title": "Akasha Pendant",
+            "subtitle": "Satin Finish Gold",
+            "price": "$1,200"
+          }
+        }
+      },
+      "block_order": [
+        "product-1",
+        "product-2",
+        "product-3",
+        "product-4",
+        "product-5"
+      ],
+      "settings": {
+        "breadcrumb": "Collections / New Arrivals",
+        "heading": "<p>Handcrafted<br>Curations</p>",
+        "filter_label": "Filter & Sort",
+        "count_label": "Showing 7 of 42 Items",
+        "load_more_label": "Load More Pieces",
+        "background_color": "#F5EDE0",
+        "surface_color": "#EDE6D8",
+        "accent_color": "#731C28"
+      }
     }
   },
   "order": [
-    "main"
+    "rukma-collection-listing"
   ]
 }

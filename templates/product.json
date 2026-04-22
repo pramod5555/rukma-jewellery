@@ -1,20 +1,76 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "product",
-      "settings": {}
+    "rukma-product-detail": {
+      "type": "rukma-product-detail",
+      "blocks": {
+        "spec-1": {
+          "type": "spec",
+          "settings": {
+            "label": "Purity",
+            "value": "22 Karat Yellow Gold"
+          }
+        },
+        "spec-2": {
+          "type": "spec",
+          "settings": {
+            "label": "Gemstones",
+            "value": "12.4ct Burmese Rubies"
+          }
+        },
+        "spec-3": {
+          "type": "spec",
+          "settings": {
+            "label": "Technique",
+            "value": "Traditional Chasing & Repoussé"
+          }
+        },
+        "related-1": {
+          "type": "related_product",
+          "settings": {
+            "title": "Mandala Ruby Studs",
+            "price": "₹1,56,000"
+          }
+        },
+        "related-2": {
+          "type": "related_product",
+          "settings": {
+            "title": "Heritage Mandala Ring",
+            "price": "₹1,01,000"
+          }
+        },
+        "related-3": {
+          "type": "related_product",
+          "settings": {
+            "title": "Heritage Chased Bangle",
+            "price": "₹2,02,000"
+          }
+        }
+      },
+      "block_order": [
+        "spec-1",
+        "spec-2",
+        "spec-3",
+        "related-1",
+        "related-2",
+        "related-3"
+      ],
+      "settings": {
+        "eyebrow": "The Heritage Collection",
+        "title": "Mandala Heritage Choker",
+        "subtitle": "22k Gold & Burmese Rubies",
+        "price": "₹3,58,000",
+        "description": "<p>A masterpiece of archival craftsmanship. This piece features hand-chased gold work following traditional mandala motifs, punctuated by ethically sourced rubies that capture the light with deep, rhythmic intensity.</p>",
+        "primary_cta_label": "Add to bag",
+        "secondary_cta_label": "Consult a curator",
+        "related_heading": "To Complete the Ensemble",
+        "related_link_label": "View all shop",
+        "background_color": "#F5EDE0",
+        "surface_color": "#EDE6D8",
+        "accent_color": "#731C28"
+      }
     }
   },
   "order": [
-    "main"
+    "rukma-product-detail"
   ]
 }

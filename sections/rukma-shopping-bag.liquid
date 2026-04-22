@@ -1,0 +1,492 @@
+<section
+  class="rukma-shopping-bag"
+  style="
+    --rukma-bag-bg: {{ section.settings.background_color }};
+    --rukma-bag-surface: {{ section.settings.surface_color }};
+    --rukma-bag-accent: {{ section.settings.accent_color }};
+  "
+>
+  <header class="rukma-shopping-bag-header">
+    {%- if section.settings.heading != blank -%}
+      <h1 class="rukma-shopping-bag-heading">{{ section.settings.heading | escape }}</h1>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="rukma-shopping-bag-subheading">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+  </header>
+
+  <div class="rukma-shopping-bag-grid">
+    <div class="rukma-shopping-bag-items">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bag_item' -%}
+          <article class="rukma-shopping-bag-item" {{ block.shopify_attributes }}>
+            <div class="rukma-shopping-bag-item-media">
+              {%- if block.settings.image -%}
+                <img
+                  src="{{ block.settings.image | img_url: '1400x' }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  class="rukma-shopping-bag-item-image"
+                  width="1400"
+                  height="1867"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'rukma-shopping-bag-item-image rukma-shopping-bag-placeholder' }}
+              {%- endif -%}
+            </div>
+            <div class="rukma-shopping-bag-item-copy">
+              <div>
+                <div class="rukma-shopping-bag-item-top">
+                  <h2 class="rukma-shopping-bag-item-title">{{ block.settings.title | escape }}</h2>
+                  <p class="rukma-shopping-bag-item-price">{{ block.settings.price | escape }}</p>
+                </div>
+                <p class="rukma-shopping-bag-item-meta">{{ block.settings.meta | escape }}</p>
+              </div>
+              <div class="rukma-shopping-bag-item-controls">
+                <div class="rukma-shopping-bag-quantity">
+                  <span>{{ section.settings.quantity_label | escape }}</span>
+                  <button type="button" aria-label="{{ section.settings.decrease_label | escape }}">−</button>
+                  <strong>{{ block.settings.quantity | escape }}</strong>
+                  <button type="button" aria-label="{{ section.settings.increase_label | escape }}">+</button>
+                </div>
+                <button class="rukma-shopping-bag-remove" type="button">{{ section.settings.remove_label | escape }}</button>
+              </div>
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <aside class="rukma-shopping-bag-summary">
+      <h2 class="rukma-shopping-bag-summary-heading">{{ section.settings.summary_heading | escape }}</h2>
+      <div class="rukma-shopping-bag-summary-lines">
+        <div>
+          <span>{{ section.settings.subtotal_label | escape }}</span>
+          <strong>{{ section.settings.subtotal | escape }}</strong>
+        </div>
+        <div>
+          <span>{{ section.settings.shipping_label | escape }}</span>
+          <strong>{{ section.settings.shipping | escape }}</strong>
+        </div>
+        <div class="rukma-shopping-bag-summary-total">
+          <span>{{ section.settings.total_label | escape }}</span>
+          <strong>{{ section.settings.total | escape }}</strong>
+        </div>
+      </div>
+      {%- if section.settings.checkout_label != blank -%}
+        <a href="{{ section.settings.checkout_link | default: routes.cart_url }}" class="rukma-shopping-bag-checkout">
+          {{ section.settings.checkout_label | escape }}
+        </a>
+      {%- endif -%}
+      <div class="rukma-shopping-bag-assurances">
+        {%- if section.settings.assurance_one != blank -%}
+          <p>{{ section.settings.assurance_one | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.assurance_two != blank -%}
+          <p>{{ section.settings.assurance_two | escape }}</p>
+        {%- endif -%}
+      </div>
+    </aside>
+  </div>
+
+  <div class="rukma-shopping-bag-complements">
+    {%- if section.settings.complements_heading != blank -%}
+      <h2 class="rukma-shopping-bag-complements-heading">{{ section.settings.complements_heading | escape }}</h2>
+    {%- endif -%}
+    <div class="rukma-shopping-bag-complements-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'complement' -%}
+          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="rukma-shopping-bag-complement" {{ block.shopify_attributes }}>
+            <div class="rukma-shopping-bag-complement-media">
+              {%- if block.settings.image -%}
+                <img
+                  src="{{ block.settings.image | img_url: '1400x' }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  class="rukma-shopping-bag-complement-image"
+                  width="1400"
+                  height="1750"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'product-2' | placeholder_svg_tag: 'rukma-shopping-bag-complement-image rukma-shopping-bag-placeholder' }}
+              {%- endif -%}
+            </div>
+            <h3 class="rukma-shopping-bag-complement-title">{{ block.settings.title | escape }}</h3>
+            <p class="rukma-shopping-bag-complement-price">{{ block.settings.price | escape }}</p>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-shopping-bag,
+  .rukma-shopping-bag * {
+    border-radius: 0;
+  }
+
+  .rukma-shopping-bag {
+    background: var(--rukma-bag-bg, var(--color-bg));
+    color: var(--color-text);
+    font-family: var(--font-body);
+    padding: 6rem var(--page-margin) 8rem;
+  }
+
+  .rukma-shopping-bag-header,
+  .rukma-shopping-bag-grid,
+  .rukma-shopping-bag-complements {
+    max-width: var(--page-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .rukma-shopping-bag-header {
+    margin-bottom: 4rem;
+  }
+
+  .rukma-shopping-bag-heading {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 7rem);
+    line-height: 1;
+    color: var(--rukma-bag-accent, var(--color-velvet));
+  }
+
+  .rukma-shopping-bag-subheading,
+  .rukma-shopping-bag-item-meta,
+  .rukma-shopping-bag-quantity,
+  .rukma-shopping-bag-remove,
+  .rukma-shopping-bag-summary-heading,
+  .rukma-shopping-bag-summary-lines,
+  .rukma-shopping-bag-checkout,
+  .rukma-shopping-bag-assurances,
+  .rukma-shopping-bag-complement-price {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+  }
+
+  .rukma-shopping-bag-subheading {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+  }
+
+  .rukma-shopping-bag-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(18rem, 4fr);
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .rukma-shopping-bag-items {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .rukma-shopping-bag-item {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: 2rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 18%, transparent);
+  }
+
+  .rukma-shopping-bag-item-media {
+    aspect-ratio: 3 / 4;
+    background: var(--rukma-bag-surface, var(--color-surface));
+    overflow: hidden;
+  }
+
+  .rukma-shopping-bag-item-image,
+  .rukma-shopping-bag-complement-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+  }
+
+  .rukma-shopping-bag-item-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .rukma-shopping-bag-item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .rukma-shopping-bag-item-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.8rem;
+  }
+
+  .rukma-shopping-bag-item-price {
+    margin: 0;
+    letter-spacing: 0.12em;
+  }
+
+  .rukma-shopping-bag-item-meta {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .rukma-shopping-bag-item-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .rukma-shopping-bag-quantity {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 35%, transparent);
+    padding-bottom: 0.35rem;
+    font-size: 0.62rem;
+  }
+
+  .rukma-shopping-bag-quantity button,
+  .rukma-shopping-bag-remove {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .rukma-shopping-bag-quantity strong {
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+  }
+
+  .rukma-shopping-bag-remove {
+    color: var(--color-text-secondary);
+    font-size: 0.62rem;
+    letter-spacing: var(--letter-spacing-label);
+  }
+
+  .rukma-shopping-bag-summary {
+    position: sticky;
+    top: 2rem;
+    padding: 3rem;
+    background: var(--rukma-bag-surface, var(--color-surface));
+  }
+
+  .rukma-shopping-bag-summary-heading {
+    margin: 0 0 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 25%, transparent);
+    font-size: 0.72rem;
+  }
+
+  .rukma-shopping-bag-summary-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-size: 0.7rem;
+  }
+
+  .rukma-shopping-bag-summary-lines div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .rukma-shopping-bag-summary-total {
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-text-secondary) 25%, transparent);
+    align-items: flex-end;
+  }
+
+  .rukma-shopping-bag-summary-total span,
+  .rukma-shopping-bag-summary-total strong {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .rukma-shopping-bag-summary-total strong {
+    color: var(--rukma-bag-accent, var(--color-velvet));
+  }
+
+  .rukma-shopping-bag-checkout {
+    display: block;
+    margin-top: 3rem;
+    padding: 1.35rem 1rem;
+    background: var(--rukma-bag-accent, var(--color-velvet));
+    color: var(--color-bg);
+    text-align: center;
+    font-size: 0.7rem;
+  }
+
+  .rukma-shopping-bag-assurances {
+    margin-top: 2rem;
+    color: var(--color-text-secondary);
+    font-size: 0.58rem;
+    line-height: 1.6;
+  }
+
+  .rukma-shopping-bag-assurances p {
+    margin: 0 0 1rem;
+  }
+
+  .rukma-shopping-bag-complements {
+    margin-top: 8rem;
+    padding-top: 5rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-text-secondary) 18%, transparent);
+  }
+
+  .rukma-shopping-bag-complements-heading {
+    margin: 0 0 3rem;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .rukma-shopping-bag-complements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3rem;
+  }
+
+  .rukma-shopping-bag-complement {
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  .rukma-shopping-bag-complement-media {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--rukma-bag-surface, var(--color-surface));
+  }
+
+  .rukma-shopping-bag-complement-image {
+    transition: transform 0.7s ease;
+  }
+
+  .rukma-shopping-bag-complement:hover .rukma-shopping-bag-complement-image {
+    transform: scale(1.04);
+  }
+
+  .rukma-shopping-bag-complement-title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.25rem;
+  }
+
+  .rukma-shopping-bag-complement-price {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.62rem;
+  }
+
+  .rukma-shopping-bag-placeholder {
+    opacity: 0.28;
+  }
+
+  @media (max-width: 980px) {
+    .rukma-shopping-bag-grid,
+    .rukma-shopping-bag-complements-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rukma-shopping-bag-summary {
+      position: static;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .rukma-shopping-bag-item {
+      grid-template-columns: 1fr;
+    }
+
+    .rukma-shopping-bag-item-top,
+    .rukma-shopping-bag-item-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "RUKMA shopping bag",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your Bag" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Selection of Handcrafted Curations" },
+    { "type": "text", "id": "quantity_label", "label": "Quantity label", "default": "Qty" },
+    { "type": "text", "id": "decrease_label", "label": "Decrease label", "default": "Decrease quantity" },
+    { "type": "text", "id": "increase_label", "label": "Increase label", "default": "Increase quantity" },
+    { "type": "text", "id": "remove_label", "label": "Remove label", "default": "Remove" },
+    { "type": "text", "id": "summary_heading", "label": "Summary heading", "default": "Bag Summary" },
+    { "type": "text", "id": "subtotal_label", "label": "Subtotal label", "default": "Subtotal" },
+    { "type": "text", "id": "subtotal", "label": "Subtotal", "default": "$2,130" },
+    { "type": "text", "id": "shipping_label", "label": "Shipping label", "default": "Shipping" },
+    { "type": "text", "id": "shipping", "label": "Shipping", "default": "Complimentary" },
+    { "type": "text", "id": "total_label", "label": "Total label", "default": "Total" },
+    { "type": "text", "id": "total", "label": "Total", "default": "$2,130" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout label", "default": "Proceed to Checkout" },
+    { "type": "url", "id": "checkout_link", "label": "Checkout link" },
+    { "type": "text", "id": "assurance_one", "label": "Assurance one", "default": "Secured & encrypted artisanal transaction" },
+    { "type": "text", "id": "assurance_two", "label": "Assurance two", "default": "White-glove delivery within 7-10 days" },
+    { "type": "text", "id": "complements_heading", "label": "Complements heading", "default": "To Complement Your Curations" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F5EDE0" },
+    { "type": "color", "id": "surface_color", "label": "Surface color", "default": "#EDE6D8" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#731C28" }
+  ],
+  "blocks": [
+    {
+      "type": "bag_item",
+      "name": "Bag item",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Varanasi Bloom Necklace" },
+        { "type": "text", "id": "price", "label": "Price", "default": "$1,250" },
+        { "type": "text", "id": "meta", "label": "Meta", "default": "22k Gold • Natural Ruby" },
+        { "type": "text", "id": "quantity", "label": "Quantity", "default": "01" }
+      ]
+    },
+    {
+      "type": "complement",
+      "name": "Complement",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Arcadia Bangle" },
+        { "type": "text", "id": "price", "label": "Price", "default": "$540" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RUKMA shopping bag",
+      "blocks": [
+        { "type": "bag_item", "settings": { "title": "Varanasi Bloom Necklace", "price": "$1,250", "meta": "22k Gold • Natural Ruby", "quantity": "01" } },
+        { "type": "bag_item", "settings": { "title": "Solaris Filigree Hoops", "price": "$880", "meta": "Hand-forged Gold • Matte Finish", "quantity": "01" } },
+        { "type": "complement", "settings": { "title": "Arcadia Bangle", "price": "$540" } },
+        { "type": "complement", "settings": { "title": "Raw Emerald Solitaire", "price": "$1,100" } },
+        { "type": "complement", "settings": { "title": "Dewdrop Pearl Drops", "price": "$420" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

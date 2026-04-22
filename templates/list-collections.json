@@ -1,20 +1,38 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "collections",
-      "settings": {}
+    "rukma-category-grid": {
+      "type": "rukma-category-grid",
+      "blocks": {
+        "category-1": {
+          "type": "category",
+          "settings": {
+            "label": "Heritage"
+          }
+        },
+        "category-2": {
+          "type": "category",
+          "settings": {
+            "label": "Men"
+          }
+        },
+        "category-3": {
+          "type": "category",
+          "settings": {
+            "label": "Women"
+          }
+        }
+      },
+      "block_order": [
+        "category-1",
+        "category-2",
+        "category-3"
+      ],
+      "settings": {
+        "heading": "Shop by world"
+      }
     }
   },
   "order": [
-    "main"
+    "rukma-category-grid"
   ]
 }

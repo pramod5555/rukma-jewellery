@@ -11,3 +11,7 @@
 #
 # Ignore templates and sections with a regular expression:
 #   /(templates|sections)/.*\.json/
+
+# The Shopify-connected theme lives at the repo root. This nested copy is for
+# local editing/history and should not be uploaded as theme files.
+rukma-theme/

@@ -1,0 +1,537 @@
+<section
+  class="rukma-landing"
+  style="
+    --rukma-landing-bg: {{ section.settings.background_color }};
+    --rukma-landing-surface: {{ section.settings.surface_color }};
+    --rukma-landing-accent: {{ section.settings.accent_color }};
+  "
+>
+  <div class="rukma-landing-hero">
+    <div class="rukma-landing-hero-media">
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | img_url: '1400x' }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          class="rukma-landing-hero-image"
+          width="1400"
+          height="1867"
+          loading="eager"
+        >
+      {%- else -%}
+        <img
+          src="{{ 'rukma-hero-editorial.jpg' | asset_url }}"
+          alt="{{ section.settings.heading | strip_html | default: 'RUKMA editorial jewellery portrait' | escape }}"
+          class="rukma-landing-hero-image"
+          width="1080"
+          height="1350"
+          loading="eager"
+        >
+      {%- endif -%}
+
+      {%- if section.settings.hero_cta_label != blank -%}
+        <a href="{{ section.settings.hero_cta_link | default: routes.all_products_collection_url }}" class="rukma-landing-hero-button">
+          {{ section.settings.hero_cta_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="rukma-landing-hero-copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="rukma-landing-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rukma-landing-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="rukma-landing-products">
+    <div class="rukma-landing-section-header">
+      {%- if section.settings.products_heading != blank -%}
+        <h3 class="rukma-landing-section-title">{{ section.settings.products_heading | escape }}</h3>
+      {%- endif -%}
+      {%- if section.settings.products_link_label != blank -%}
+        <a href="{{ section.settings.products_link | default: routes.all_products_collection_url }}" class="rukma-landing-link">
+          {{ section.settings.products_link_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="rukma-landing-product-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product_card' -%}
+          <a
+            href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+            class="rukma-landing-product-card"
+            {{ block.shopify_attributes }}
+          >
+            <div class="rukma-landing-product-media">
+              {%- if block.settings.image -%}
+                <img
+                  src="{{ block.settings.image | img_url: '1400x' }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  class="rukma-landing-product-image"
+                  width="1400"
+                  height="875"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'rukma-landing-product-image rukma-landing-placeholder' }}
+              {%- endif -%}
+            </div>
+            <div class="rukma-landing-product-info">
+              <div>
+                {%- if block.settings.category != blank -%}
+                  <p class="rukma-landing-product-category">{{ block.settings.category | escape }}</p>
+                {%- endif -%}
+                <h4 class="rukma-landing-product-title">{{ block.settings.title | escape }}</h4>
+              </div>
+              {%- if block.settings.price != blank -%}
+                <p class="rukma-landing-product-price">{{ block.settings.price | escape }}</p>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="rukma-landing-categories">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'category' -%}
+        <a
+          href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+          class="rukma-landing-category-card"
+          {{ block.shopify_attributes }}
+        >
+          <div class="rukma-landing-category-media">
+            {%- if block.settings.image -%}
+              <img
+                src="{{ block.settings.image | img_url: '1400x' }}"
+                alt="{{ block.settings.image.alt | default: block.settings.label | escape }}"
+                class="rukma-landing-category-image"
+                width="1400"
+                height="1867"
+                loading="lazy"
+              >
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'rukma-landing-category-image rukma-landing-placeholder' }}
+            {%- endif -%}
+          </div>
+          <span class="rukma-landing-category-label">{{ block.settings.label | escape }}</span>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="rukma-landing-narrative">
+    <div class="rukma-landing-narrative-inner">
+      {%- if section.settings.narrative_heading != blank -%}
+        <h2 class="rukma-landing-narrative-heading">{{ section.settings.narrative_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.narrative_body != blank -%}
+        <div class="rukma-landing-narrative-body">{{ section.settings.narrative_body }}</div>
+      {%- endif -%}
+      {%- if section.settings.narrative_cta_label != blank -%}
+        <a href="{{ section.settings.narrative_cta_link | default: routes.root_url }}" class="rukma-landing-narrative-link">
+          {{ section.settings.narrative_cta_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-landing,
+  .rukma-landing * {
+    border-radius: 0;
+  }
+
+  .rukma-landing {
+    background: var(--rukma-landing-bg, var(--color-bg));
+    color: var(--color-text);
+    font-family: var(--font-body);
+  }
+
+  .rukma-landing-hero {
+    min-height: 100svh;
+    position: relative;
+    display: grid;
+    place-items: stretch;
+    overflow: hidden;
+  }
+
+  .rukma-landing-hero-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--rukma-landing-surface, var(--color-surface));
+  }
+
+  .rukma-landing-hero-image,
+  .rukma-landing-product-image,
+  .rukma-landing-category-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .rukma-landing-hero-button {
+    position: absolute;
+    left: 50%;
+    bottom: 3rem;
+    z-index: 3;
+    transform: translateX(-50%);
+    padding: 1rem 3rem;
+    background: var(--rukma-landing-accent, var(--color-velvet));
+    color: var(--color-bg);
+    font: 600 0.62rem/1 var(--font-body);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: var(--shadow-ambient);
+  }
+
+  .rukma-landing-hero-copy {
+    position: relative;
+    z-index: 2;
+    align-self: end;
+    justify-self: center;
+    width: min(100% - 2rem, 56rem);
+    padding: 0 1rem 8rem;
+    text-align: center;
+  }
+
+  .rukma-landing-eyebrow,
+  .rukma-landing-link,
+  .rukma-landing-product-category,
+  .rukma-landing-category-label,
+  .rukma-landing-narrative-link {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-label);
+  }
+
+  .rukma-landing-eyebrow {
+    margin: 0 0 1.5rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    color: var(--color-bg);
+    text-shadow: 0 1px 18px rgba(30, 27, 20, 0.35);
+  }
+
+  .rukma-landing-heading {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.95;
+    color: var(--color-bg);
+    text-shadow: 0 1px 24px rgba(30, 27, 20, 0.35);
+  }
+
+  .rukma-landing-products {
+    padding: 7rem var(--page-margin);
+  }
+
+  .rukma-landing-section-header {
+    max-width: var(--page-width);
+    margin: 0 auto 4rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text-secondary) 25%, transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .rukma-landing-section-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-text);
+  }
+
+  .rukma-landing-link,
+  .rukma-landing-narrative-link {
+    font-size: 0.62rem;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.25rem;
+  }
+
+  .rukma-landing-product-grid,
+  .rukma-landing-categories {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    display: grid;
+    gap: 4rem 3rem;
+  }
+
+  .rukma-landing-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rukma-landing-product-card {
+    color: var(--color-text);
+  }
+
+  .rukma-landing-product-media {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--rukma-landing-surface, var(--color-surface));
+  }
+
+  .rukma-landing-product-image,
+  .rukma-landing-category-image {
+    transition: transform 0.7s ease, filter 0.7s ease, opacity 0.7s ease;
+  }
+
+  .rukma-landing-product-card:hover .rukma-landing-product-image,
+  .rukma-landing-category-card:hover .rukma-landing-category-image {
+    transform: scale(1.04);
+  }
+
+  .rukma-landing-product-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .rukma-landing-product-category {
+    margin: 0 0 0.35rem;
+    font-size: 0.56rem;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-landing-product-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 300;
+  }
+
+  .rukma-landing-product-price {
+    margin: 0;
+    color: var(--rukma-landing-accent, var(--color-velvet));
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .rukma-landing-categories {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 var(--page-margin) 8rem;
+  }
+
+  .rukma-landing-category-media {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--rukma-landing-surface, var(--color-surface));
+  }
+
+  .rukma-landing-category-image {
+    filter: grayscale(1);
+    opacity: 0.82;
+  }
+
+  .rukma-landing-category-card:hover .rukma-landing-category-image {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+
+  .rukma-landing-category-label {
+    display: block;
+    text-align: center;
+    font-size: 0.68rem;
+    letter-spacing: 0.5em;
+    color: var(--color-text);
+  }
+
+  .rukma-landing-narrative {
+    padding: 8rem var(--page-margin);
+    background: var(--rukma-landing-surface, var(--color-surface));
+  }
+
+  .rukma-landing-narrative-inner {
+    max-width: 56rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .rukma-landing-narrative-heading {
+    margin: 0 0 3rem;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05;
+  }
+
+  .rukma-landing-narrative-heading em {
+    font-style: italic;
+  }
+
+  .rukma-landing-narrative-body {
+    max-width: 42rem;
+    margin: 0 auto 4rem;
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .rukma-landing-narrative-link {
+    color: var(--rukma-landing-accent, var(--color-velvet));
+  }
+
+  .rukma-landing-placeholder {
+    opacity: 0.32;
+  }
+
+  @media (max-width: 760px) {
+    .rukma-landing-product-grid,
+    .rukma-landing-categories {
+      grid-template-columns: 1fr;
+    }
+
+    .rukma-landing-section-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "RUKMA landing page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Eternal Collection"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Poetry in<br>Gold &amp; Stone</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_label",
+      "label": "Hero button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_link",
+      "label": "Hero button link"
+    },
+    {
+      "type": "text",
+      "id": "products_heading",
+      "label": "Products heading",
+      "default": "Curated Pieces"
+    },
+    {
+      "type": "text",
+      "id": "products_link_label",
+      "label": "Products link label",
+      "default": "View all archive"
+    },
+    {
+      "type": "url",
+      "id": "products_link",
+      "label": "Products link"
+    },
+    {
+      "type": "richtext",
+      "id": "narrative_heading",
+      "label": "Narrative heading",
+      "default": "<p>Crafted for the modern <em>archivist.</em></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "narrative_body",
+      "label": "Narrative body",
+      "default": "<p>We believe in the quiet power of objects. Each piece is a conversation between traditional Indian craftsmanship and a global minimalist aesthetic, forged in 22k gold and responsibly sourced gems.</p>"
+    },
+    {
+      "type": "text",
+      "id": "narrative_cta_label",
+      "label": "Narrative link label",
+      "default": "Read our story"
+    },
+    {
+      "type": "url",
+      "id": "narrative_cta_link",
+      "label": "Narrative link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F5EDE0"
+    },
+    {
+      "type": "color",
+      "id": "surface_color",
+      "label": "Surface color",
+      "default": "#EDE6D8"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#731C28"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "category", "label": "Category", "default": "Necklace" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The Surya Choker" },
+        { "type": "text", "id": "price", "label": "Price", "default": "₹42,000" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Heritage" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RUKMA landing page",
+      "blocks": [
+        { "type": "product_card", "settings": { "category": "Necklace", "title": "The Surya Choker", "price": "₹42,000" } },
+        { "type": "product_card", "settings": { "category": "Earrings", "title": "Verdant Bloom Studs", "price": "₹28,500" } },
+        { "type": "product_card", "settings": { "category": "Ring", "title": "Luna Orbit Ring", "price": "₹18,900" } },
+        { "type": "product_card", "settings": { "category": "Bracelet", "title": "Heritage Link", "price": "₹56,000" } },
+        { "type": "category", "settings": { "label": "Heritage" } },
+        { "type": "category", "settings": { "label": "Men" } },
+        { "type": "category", "settings": { "label": "Women" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
