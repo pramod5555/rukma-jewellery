@@ -1,0 +1,184 @@
+<section class="rukma-editorial-hero">
+  <div class="rukma-editorial-hero__inner">
+
+    <div class="rukma-editorial-hero__img-wrap">
+      {%- if section.settings.image -%}
+        {{
+          section.settings.image
+          | image_url: width: 900
+          | image_tag:
+            loading: 'eager',
+            class: 'rukma-editorial-hero__img',
+            alt: section.settings.image.alt | default: section.settings.heading
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'rukma-editorial-hero__img rukma-editorial-hero__img--placeholder' }}
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank -%}
+        <div class="rukma-editorial-hero__overlay">
+          <a
+            href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+            class="rukma-editorial-hero__cta-btn"
+          >
+            {{- section.settings.cta_label | escape -}}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="rukma-editorial-hero__text">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="rukma-editorial-hero__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rukma-editorial-hero__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-editorial-hero {
+    background: var(--color-bg, #F5EDE0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6rem 2rem 4rem;
+    min-height: 100svh;
+  }
+
+  .rukma-editorial-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    gap: 3rem;
+  }
+
+  .rukma-editorial-hero__img-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--color-surface, #EDE6D8);
+  }
+
+  .rukma-editorial-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .rukma-editorial-hero__img--placeholder {
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+  }
+
+  .rukma-editorial-hero__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 2.5rem;
+  }
+
+  .rukma-editorial-hero__cta-btn {
+    display: inline-block;
+    background: var(--color-velvet, #731C28);
+    color: #F5EDE0;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 1rem 3rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    transition: background 0.25s;
+  }
+
+  .rukma-editorial-hero__cta-btn:hover {
+    background: #5e1620;
+  }
+
+  .rukma-editorial-hero__text {
+    text-align: center;
+    max-width: 700px;
+    padding: 0 1rem;
+  }
+
+  .rukma-editorial-hero__eyebrow {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+    margin-bottom: 1.5rem;
+  }
+
+  .rukma-editorial-hero__heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-velvet, #731C28);
+  }
+
+  @media (max-width: 600px) {
+    .rukma-editorial-hero {
+      padding: 4rem 1.25rem 3rem;
+    }
+
+    .rukma-editorial-hero__img-wrap {
+      max-width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rukma_editorial_hero.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "The Eternal Collection"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "<p>Poetry in Gold &amp; Stone</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "t:labels.cta_url"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rukma_editorial_hero.name"
+    }
+  ]
+}
+{% endschema %}

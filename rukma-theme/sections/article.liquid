@@ -1,64 +1,419 @@
-{% comment %}
-  This section is used in the article template to render the article page, which
-  displays the full content of the blog post and can optionally include a
-  comments section for customers (not shown in this example).
+<article class="rukma-article">
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/article
-{% endcomment %}
+  {%- if article.image -%}
+    <div class="rukma-article__hero">
+      {{ article.image
+        | image_url: width: 2000
+        | image_tag:
+          loading: 'eager',
+          class: 'rukma-article__hero-img',
+          alt: article.image.alt | default: article.title
+      }}
+    </div>
+  {%- endif -%}
 
-{% if article.image %}
-  {{ article.image | image_url: width: 1000 | image_tag }}
-{% endif %}
+  <div class="rukma-article__inner">
+    <header class="rukma-article__header">
+      <a href="{{ blog.url }}" class="rukma-article__back">
+        {{- 'blog.back_to_blog' | t -}}
+      </a>
+      <h1 class="rukma-article__title">{{ article.title | escape }}</h1>
+      <p class="rukma-article__meta">
+        {%- assign date = article.published_at | time_tag: format: 'date' -%}
+        {{ 'blog.article_metadata_html' | t: date: date, author: article.author }}
+      </p>
+    </header>
 
-<h1>{{ article.title }}</h1>
+    <div class="rukma-article__content rte">
+      {{ article.content }}
+    </div>
 
-{% assign date = article.published_at | time_tag: format: 'date' %}
-<p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-
-{{ article.content }}
-
-{% if blog.comments_enabled? %}
-  <h2>{{ 'blog.article_comments' | t }}</h2>
-
-  <div id="comments">
-    {% paginate article.comments by 10 %}
-      {% for comment in article.comments %}
-        <div>
-          <p>{{ comment.author }}</p>
-          <p>
-            {{- comment.created_at | time_tag: format: 'date' -}}
-          </p>
-          <p>{{ comment.content }}</p>
-        </div>
-      {% endfor %}
-
-      {{ paginate | default_pagination: anchor: 'comments' }}
-    {% endpaginate %}
+    <footer class="rukma-article__footer">
+      <a href="{{ blog.url }}" class="rukma-article__back-bottom">
+        ← {{ 'blog.back_to_blog' | t }}
+      </a>
+    </footer>
   </div>
 
-  {% form 'new_comment', article %}
-    <h2>{{ 'blog.comment_form_title' | t }}</h2>
+  {%- if blog.comments_enabled? -%}
+    <div class="rukma-article__comments-section">
+      <div class="rukma-article__comments-inner">
 
-    {{ form.errors | default_errors }}
+        {%- if article.comments_count > 0 -%}
+          <h2 class="rukma-article__comments-heading">{{ 'blog.article_comments' | t }}</h2>
+          <div id="comments" class="rukma-article__comments">
+            {%- paginate article.comments by 10 -%}
+              {%- for comment in article.comments -%}
+                <div class="rukma-comment">
+                  <div class="rukma-comment__header">
+                    <span class="rukma-comment__author">{{ comment.author | escape }}</span>
+                    <span class="rukma-comment__date">
+                      {{- comment.created_at | time_tag: format: 'date' -}}
+                    </span>
+                  </div>
+                  <p class="rukma-comment__body">{{ comment.content }}</p>
+                </div>
+              {%- endfor -%}
+              {%- if paginate.pages > 1 -%}
+                <div class="rukma-article__comments-pagination">
+                  {{ paginate | default_pagination: anchor: 'comments' }}
+                </div>
+              {%- endif -%}
+            {%- endpaginate -%}
+          </div>
+        {%- endif -%}
 
-    <div>
-      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
-      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
+        <div class="rukma-comment-form">
+          <h2 class="rukma-comment-form__heading">{{ 'blog.comment_form_title' | t }}</h2>
+          {%- form 'new_comment', article -%}
+            {{ form.errors | default_errors }}
+            <div class="rukma-comment-form__fields">
+              <div class="rukma-comment-form__field">
+                <label class="rukma-comment-form__label" for="comment-author">
+                  {{ 'blog.comment_form_name' | t }}
+                </label>
+                <input
+                  type="text"
+                  name="comment[author]"
+                  id="comment-author"
+                  class="rukma-comment-form__input"
+                  value="{{ form.author }}"
+                  required
+                  autocomplete="name"
+                >
+              </div>
+              <div class="rukma-comment-form__field">
+                <label class="rukma-comment-form__label" for="comment-email">
+                  {{ 'blog.comment_form_email' | t }}
+                </label>
+                <input
+                  type="email"
+                  name="comment[email]"
+                  id="comment-email"
+                  class="rukma-comment-form__input"
+                  value="{{ form.email }}"
+                  required
+                  autocomplete="email"
+                >
+              </div>
+            </div>
+            <div class="rukma-comment-form__field">
+              <label class="rukma-comment-form__label" for="comment-body">
+                {{ 'blog.comment_form_body' | t }}
+              </label>
+              <textarea
+                name="comment[body]"
+                id="comment-body"
+                class="rukma-comment-form__textarea"
+                required
+                rows="5"
+              >{{ form.body }}</textarea>
+            </div>
+            <button type="submit" class="rukma-comment-form__submit">
+              {{ 'blog.comment_form_submit' | t }}
+            </button>
+          {%- endform -%}
+        </div>
+
+      </div>
     </div>
+  {%- endif -%}
 
-    <div>
-      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
-      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
-    </div>
+</article>
 
-    <div>
-      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
-      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
-    </div>
+{% stylesheet %}
+  .rukma-article {
+    background: var(--color-bg, #F5EDE0);
+  }
 
-    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
-  {% endform %}
-{% endif %}
+  .rukma-article__hero {
+    width: 100%;
+    max-height: 60vh;
+    overflow: hidden;
+  }
+
+  .rukma-article__hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .rukma-article__inner {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 5rem 2rem 6rem;
+  }
+
+  .rukma-article__back {
+    display: inline-flex;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.15rem;
+    margin-bottom: 2.5rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .rukma-article__back:hover {
+    color: var(--color-text, #2C2420);
+    border-bottom-color: currentColor;
+  }
+
+  .rukma-article__header {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(44, 36, 32, 0.1);
+  }
+
+  .rukma-article__title {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    letter-spacing: -0.01em;
+    color: var(--color-text, #2C2420);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .rukma-article__meta {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+  }
+
+  .rukma-article__content.rte {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--color-text, #2C2420);
+  }
+
+  .rukma-article__content.rte h2,
+  .rukma-article__content.rte h3 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    color: var(--color-text, #2C2420);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .rukma-article__content.rte h2 {
+    font-size: 2rem;
+    letter-spacing: -0.01em;
+  }
+
+  .rukma-article__content.rte h3 {
+    font-size: 1.4rem;
+  }
+
+  .rukma-article__content.rte p {
+    margin-bottom: 1.5rem;
+    color: #5a4f48;
+  }
+
+  .rukma-article__content.rte a {
+    color: var(--color-velvet, #731C28);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.05em;
+    transition: opacity 0.2s;
+  }
+
+  .rukma-article__content.rte a:hover {
+    opacity: 0.7;
+  }
+
+  .rukma-article__content.rte img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem 0;
+  }
+
+  .rukma-article__content.rte blockquote {
+    border-left: 2px solid var(--color-gold, #C4A76D);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    margin: 2.5rem 0;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text, #2C2420);
+  }
+
+  .rukma-article__footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(44, 36, 32, 0.1);
+  }
+
+  .rukma-article__back-bottom {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+    transition: color 0.2s;
+  }
+
+  .rukma-article__back-bottom:hover {
+    color: var(--color-text, #2C2420);
+  }
+
+  /* Comments */
+  .rukma-article__comments-section {
+    background: var(--color-surface, #EDE6D8);
+    padding: 5rem 2rem;
+  }
+
+  .rukma-article__comments-inner {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .rukma-article__comments-heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.8rem;
+    letter-spacing: -0.01em;
+    color: var(--color-text, #2C2420);
+    margin-bottom: 2.5rem;
+  }
+
+  .rukma-article__comments {
+    margin-bottom: 4rem;
+  }
+
+  .rukma-comment {
+    padding: 1.75rem 0;
+    border-bottom: 1px solid rgba(44, 36, 32, 0.1);
+  }
+
+  .rukma-comment__header {
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+  }
+
+  .rukma-comment__author {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-text, #2C2420);
+  }
+
+  .rukma-comment__date {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+  }
+
+  .rukma-comment__body {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: #5a4f48;
+  }
+
+  /* Comment form */
+  .rukma-comment-form__heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.8rem;
+    letter-spacing: -0.01em;
+    color: var(--color-text, #2C2420);
+    margin-bottom: 2rem;
+  }
+
+  .rukma-comment-form__fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .rukma-comment-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .rukma-comment-form__fields .rukma-comment-form__field {
+    margin-bottom: 0;
+  }
+
+  .rukma-comment-form__label {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+  }
+
+  .rukma-comment-form__input,
+  .rukma-comment-form__textarea {
+    background: transparent;
+    border: 1px solid rgba(44, 36, 32, 0.2);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text, #2C2420);
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .rukma-comment-form__input:focus,
+  .rukma-comment-form__textarea:focus {
+    border-color: var(--color-text, #2C2420);
+  }
+
+  .rukma-comment-form__textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .rukma-comment-form__submit {
+    background: var(--color-velvet, #731C28);
+    color: #F5EDE0;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.25s;
+  }
+
+  .rukma-comment-form__submit:hover {
+    background: #5e1620;
+  }
+
+  @media (max-width: 600px) {
+    .rukma-article__inner {
+      padding: 3.5rem 1.25rem 4rem;
+    }
+
+    .rukma-comment-form__fields {
+      grid-template-columns: 1fr;
+    }
+
+    .rukma-article__comments-section {
+      padding: 3.5rem 1.25rem;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

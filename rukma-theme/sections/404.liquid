@@ -1,19 +1,77 @@
-{% comment %}
-  This section is used in the 404 template to render page shown when customers
-  enter an invalid store URL.
+<section class="rukma-404">
+  <div class="rukma-404__inner">
+    <span class="rukma-404__ornament" aria-hidden="true">✦</span>
+    <h1 class="rukma-404__code">404</h1>
+    <p class="rukma-404__message">{{ '404.not_found' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="rukma-404__cta">
+      {{- '404.back_to_shopping' | t -}}
+    </a>
+  </div>
+</section>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/404
-{% endcomment %}
+{% stylesheet %}
+  .rukma-404 {
+    background: var(--color-bg, #F5EDE0);
+    min-height: 72vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    text-align: center;
+  }
 
-<h1>{{ '404.title' | t }}</h1>
+  .rukma-404__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
 
-<p>
-  {{ '404.not_found' | t }}
-</p>
+  .rukma-404__ornament {
+    font-size: 1.1rem;
+    color: var(--color-gold, #C4A76D);
+    letter-spacing: 0.4em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 
-<a href="{{ routes.all_products_collection_url }}">
-  {{ '404.back_to_shopping' | t }}
-</a>
+  .rukma-404__code {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(5rem, 15vw, 10rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--color-text, #2C2420);
+    margin: 0;
+  }
+
+  .rukma-404__message {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+    margin-bottom: 1rem;
+  }
+
+  .rukma-404__cta {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: #F5EDE0;
+    background: var(--color-velvet, #731C28);
+    padding: 1rem 2.5rem;
+    transition: background 0.25s;
+    margin-top: 0.5rem;
+  }
+
+  .rukma-404__cta:hover {
+    background: #5e1620;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

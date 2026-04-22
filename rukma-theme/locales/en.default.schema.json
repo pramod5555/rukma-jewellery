@@ -50,6 +50,9 @@
     "page_margin": "Page margin",
     "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
+    "show_newsletter": "Show newsletter signup",
+    "tagline": "Tagline",
+    "articles_per_page": "Articles per page",
     "text_style": "Text style",
     "text": "Text",
     "use_shopify_menu": "Use Shopify menu"

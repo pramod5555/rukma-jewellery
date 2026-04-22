@@ -1,33 +1,394 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+{%- liquid
+  assign is_empty = false
+  if cart.item_count == 0
+    assign is_empty = true
+  endif
+-%}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
+<section class="rukma-cart">
+  <div class="rukma-cart__inner">
+    <h1 class="rukma-cart__heading">{{ 'cart.title' | t }}</h1>
 
-<h1>{{ 'cart.title' | t }}</h1>
+    {%- if is_empty -%}
+      <div class="rukma-cart__empty">
+        <p class="rukma-cart__empty-text">{{ 'cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="rukma-cart__btn rukma-cart__btn--primary">
+          {{- 'cart.continue_shopping' | t -}}
+        </a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" class="rukma-cart__form">
+        <div class="rukma-cart__layout">
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+          <div class="rukma-cart__items">
+            {%- for item in cart.items -%}
+              <div class="rukma-cart__item">
+                <a href="{{ item.url }}" class="rukma-cart__item-img-wrap">
+                  {%- if item.image -%}
+                    {{ item.image
+                      | image_url: width: 400
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'rukma-cart__item-img',
+                        alt: item.image.alt | default: item.title
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'rukma-cart__item-img' }}
+                  {%- endif -%}
+                </a>
 
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+                <div class="rukma-cart__item-body">
+                  <div class="rukma-cart__item-top">
+                    <div class="rukma-cart__item-meta">
+                      <a href="{{ item.url }}" class="rukma-cart__item-title">{{ item.product.title }}</a>
+                      {%- unless item.product.has_only_default_variant -%}
+                        <p class="rukma-cart__item-variant">{{ item.variant.title }}</p>
+                      {%- endunless -%}
+                    </div>
+                    <p class="rukma-cart__item-price">{{ item.final_line_price | money }}</p>
+                  </div>
+
+                  <div class="rukma-cart__item-bottom">
+                    <div class="rukma-cart__qty-wrap">
+                      <label class="rukma-cart__qty-label" for="qty-{{ item.key }}">
+                        {{- 'cart.quantity' | t -}}
+                      </label>
+                      <input
+                        type="number"
+                        id="qty-{{ item.key }}"
+                        name="updates[{{ item.key }}]"
+                        value="{{ item.quantity }}"
+                        min="1"
+                        class="rukma-cart__qty-input"
+                      >
+                    </div>
+                    <a href="{{ item.url_to_remove }}" class="rukma-cart__remove">
+                      {{- 'cart.remove' | t -}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+
+            <div class="rukma-cart__update-row">
+              <button type="submit" name="update" class="rukma-cart__btn rukma-cart__btn--ghost">
+                {{- 'cart.update' | t -}}
+              </button>
+            </div>
+          </div>
+
+          <aside class="rukma-cart__summary">
+            <h2 class="rukma-cart__summary-heading">{{ 'cart.order_summary' | t }}</h2>
+
+            <div class="rukma-cart__summary-line">
+              <span>{{ 'cart.subtotal' | t }}</span>
+              <span>{{ cart.total_price | money_with_currency }}</span>
+            </div>
+
+            <p class="rukma-cart__taxes-note">{{ 'cart.taxes_and_shipping' | t }}</p>
+
+            <button type="submit" name="checkout" class="rukma-cart__btn rukma-cart__btn--primary rukma-cart__btn--full">
+              {{- 'cart.checkout' | t -}}
+            </button>
+
+            <a href="{{ routes.all_products_collection_url }}" class="rukma-cart__continue">
+              {{- 'cart.continue_shopping' | t -}}
+            </a>
+          </aside>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-cart {
+    background: var(--color-bg, #F5EDE0);
+    min-height: 60vh;
+    padding: 5rem 2rem 7rem;
+  }
+
+  .rukma-cart__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .rukma-cart__heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    color: var(--color-text, #2C2420);
+    letter-spacing: -0.01em;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(44, 36, 32, 0.12);
+  }
+
+  /* Empty state */
+  .rukma-cart__empty {
+    text-align: center;
+    padding: 6rem 0;
+  }
+
+  .rukma-cart__empty-text {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text-secondary, #8A7E76);
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Layout */
+  .rukma-cart__layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  /* Items */
+  .rukma-cart__item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(44, 36, 32, 0.08);
+  }
+
+  .rukma-cart__item-img-wrap {
+    display: block;
+    background: var(--color-surface, #EDE6D8);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .rukma-cart__item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .rukma-cart__item-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .rukma-cart__item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .rukma-cart__item-title {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text, #2C2420);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .rukma-cart__item-variant {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+  }
+
+  .rukma-cart__item-price {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text, #2C2420);
+    white-space: nowrap;
+  }
+
+  .rukma-cart__item-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rukma-cart__qty-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .rukma-cart__qty-label {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+  }
+
+  .rukma-cart__qty-input {
+    width: 52px;
+    height: 36px;
+    border: 1px solid rgba(44, 36, 32, 0.2);
+    background: transparent;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-text, #2C2420);
+    padding: 0 0.25rem;
+  }
+
+  .rukma-cart__qty-input:focus {
+    outline: 1px solid var(--color-text, #2C2420);
+    outline-offset: 1px;
+  }
+
+  .rukma-cart__remove {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .rukma-cart__remove:hover {
+    color: var(--color-text, #2C2420);
+    border-bottom-color: currentColor;
+  }
+
+  .rukma-cart__update-row {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1.5rem;
+  }
+
+  /* Summary */
+  .rukma-cart__summary {
+    position: sticky;
+    top: 6rem;
+    background: var(--color-surface, #EDE6D8);
+    padding: 2.5rem;
+  }
+
+  .rukma-cart__summary-heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text, #2C2420);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(44, 36, 32, 0.12);
+  }
+
+  .rukma-cart__summary-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text, #2C2420);
+    margin-bottom: 1rem;
+  }
+
+  .rukma-cart__taxes-note {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: var(--color-text-secondary, #8A7E76);
+    letter-spacing: 0.03em;
+    margin-bottom: 2rem;
+    margin-top: -0.5rem;
+  }
+
+  /* Buttons */
+  .rukma-cart__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    padding: 1rem 2rem;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  .rukma-cart__btn--primary {
+    background: var(--color-velvet, #731C28);
+    color: #F5EDE0;
+  }
+
+  .rukma-cart__btn--primary:hover {
+    background: #5e1620;
+  }
+
+  .rukma-cart__btn--ghost {
+    background: transparent;
+    color: var(--color-text-secondary, #8A7E76);
+    border: 1px solid rgba(44, 36, 32, 0.2);
+    padding: 0.65rem 1.5rem;
+  }
+
+  .rukma-cart__btn--ghost:hover {
+    color: var(--color-text, #2C2420);
+    border-color: var(--color-text, #2C2420);
+  }
+
+  .rukma-cart__btn--full {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .rukma-cart__continue {
+    display: block;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.15rem;
+    transition: color 0.2s, border-color 0.2s;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .rukma-cart__continue:hover {
+    color: var(--color-text, #2C2420);
+    border-bottom-color: currentColor;
+  }
+
+  @media (max-width: 768px) {
+    .rukma-cart {
+      padding: 3rem 1.25rem 5rem;
+    }
+
+    .rukma-cart__layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .rukma-cart__summary {
+      position: static;
+    }
+
+    .rukma-cart__item {
+      grid-template-columns: 90px 1fr;
+      gap: 1.25rem;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

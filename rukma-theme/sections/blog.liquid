@@ -1,35 +1,240 @@
-{% comment %}
-  This section is used in the blog template to render the blog page listing all
-  articles within a blog.
+<section class="rukma-blog">
+  <div class="rukma-blog__inner">
+    <header class="rukma-blog__header">
+      <span class="rukma-blog__ornament" aria-hidden="true">✦</span>
+      <h1 class="rukma-blog__title">{{ blog.title | escape }}</h1>
+    </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
-{% endcomment %}
+    {%- paginate blog.articles by section.settings.articles_per_page -%}
+      <div class="rukma-blog__grid">
+        {%- for article in blog.articles -%}
+          <a href="{{ article.url }}" class="rukma-blog-card">
+            <div class="rukma-blog-card__img-wrap">
+              {%- if article.image -%}
+                {{ article.image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'rukma-blog-card__img',
+                    alt: article.image.alt | default: article.title
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'rukma-blog-card__img rukma-blog-card__img--placeholder' }}
+              {%- endif -%}
+            </div>
 
-<h1>{{ blog.title }}</h1>
+            <div class="rukma-blog-card__body">
+              <p class="rukma-blog-card__date">
+                {{- article.published_at | date: '%B %d, %Y' -}}
+              </p>
+              <h2 class="rukma-blog-card__heading">{{ article.title | escape }}</h2>
+              {%- if article.excerpt != blank -%}
+                <p class="rukma-blog-card__excerpt">{{ article.excerpt | strip_html | truncatewords: 20 }}</p>
+              {%- endif -%}
+              <span class="rukma-blog-card__read-more">{{ 'blog.read_more' | t }}</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
 
-{% paginate blog.articles by 5 %}
-  {% for article in blog.articles %}
-    <div>
-      {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
-      {% endif %}
-      <h2>
-        {{ article.title | link_to: article.url }}
-      </h2>
-      {% assign date = article.published_at | time_tag: format: 'date' %}
-      <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-      <p>{{ article.excerpt }}</p>
-    </div>
-  {% endfor %}
+      {%- if paginate.pages > 1 -%}
+        <div class="rukma-blog__pagination">
+          {{ paginate | default_pagination }}
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
 
-  {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
-  {%- endif -%}
-{% endpaginate %}
+{% stylesheet %}
+  .rukma-blog {
+    background: var(--color-bg, #F5EDE0);
+    padding: 6rem 2rem 8rem;
+  }
+
+  .rukma-blog__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .rukma-blog__header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .rukma-blog__ornament {
+    font-size: 0.9rem;
+    color: var(--color-gold, #C4A76D);
+    letter-spacing: 0.4em;
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .rukma-blog__title {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.01em;
+    color: var(--color-text, #2C2420);
+  }
+
+  .rukma-blog__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem 2.5rem;
+  }
+
+  .rukma-blog-card {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text, #2C2420);
+  }
+
+  .rukma-blog-card__img-wrap {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-surface, #EDE6D8);
+    margin-bottom: 1.5rem;
+  }
+
+  .rukma-blog-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .rukma-blog-card__img--placeholder {
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+  }
+
+  .rukma-blog-card:hover .rukma-blog-card__img {
+    transform: scale(1.03);
+  }
+
+  .rukma-blog-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+
+  .rukma-blog-card__date {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+  }
+
+  .rukma-blog-card__heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
+    line-height: 1.35;
+    color: var(--color-text, #2C2420);
+    transition: color 0.2s;
+  }
+
+  .rukma-blog-card:hover .rukma-blog-card__heading {
+    color: var(--color-velvet, #731C28);
+  }
+
+  .rukma-blog-card__excerpt {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary, #8A7E76);
+    margin-top: 0.25rem;
+  }
+
+  .rukma-blog-card__read-more {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #8A7E76);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.15rem;
+    width: fit-content;
+    margin-top: auto;
+    padding-top: 1rem;
+    transition: color 0.2s;
+  }
+
+  .rukma-blog-card:hover .rukma-blog-card__read-more {
+    color: var(--color-text, #2C2420);
+  }
+
+  .rukma-blog__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 5rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+  }
+
+  .rukma-blog__pagination a,
+  .rukma-blog__pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    color: var(--color-text-secondary, #8A7E76);
+    border: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .rukma-blog__pagination a:hover {
+    border-color: rgba(44, 36, 32, 0.2);
+    color: var(--color-text, #2C2420);
+  }
+
+  .rukma-blog__pagination .current {
+    border-color: var(--color-text, #2C2420);
+    color: var(--color-text, #2C2420);
+  }
+
+  @media (max-width: 900px) {
+    .rukma-blog__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .rukma-blog {
+      padding: 4rem 1.25rem 5rem;
+    }
+
+    .rukma-blog__grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.blog",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "t:labels.articles_per_page",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9
+    }
+  ]
 }
 {% endschema %}

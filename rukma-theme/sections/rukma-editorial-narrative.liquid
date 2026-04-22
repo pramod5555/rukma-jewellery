@@ -1,0 +1,117 @@
+<section class="rukma-editorial-narrative">
+  <div class="rukma-editorial-narrative__inner">
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="rukma-editorial-narrative__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.body != blank -%}
+      <div class="rukma-editorial-narrative__body">{{ section.settings.body }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+      <a href="{{ section.settings.cta_url }}" class="rukma-editorial-narrative__cta">
+        {{- section.settings.cta_label | escape -}}
+      </a>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-editorial-narrative {
+    background: var(--color-surface, #EDE6D8);
+    padding: 8rem 2rem;
+  }
+
+  .rukma-editorial-narrative__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .rukma-editorial-narrative__heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--color-text, #2C2420);
+    margin-bottom: 3rem;
+  }
+
+  .rukma-editorial-narrative__heading em {
+    font-style: italic;
+  }
+
+  .rukma-editorial-narrative__body {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text-secondary, #8A7E76);
+    max-width: 600px;
+    margin: 0 auto 4rem;
+  }
+
+  .rukma-editorial-narrative__body p {
+    margin-bottom: 1rem;
+  }
+
+  .rukma-editorial-narrative__cta {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-velvet, #731C28);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.2rem;
+    transition: opacity 0.2s;
+  }
+
+  .rukma-editorial-narrative__cta:hover {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 600px) {
+    .rukma-editorial-narrative {
+      padding: 5rem 1.25rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rukma_editorial_narrative.name",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "<p>Crafted for the modern <em>archivist.</em></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "t:labels.text",
+      "default": "<p>We believe in the quiet power of objects. Each piece is a conversation between traditional Indian craftsmanship and a global minimalist aesthetic, forged in 22k gold and responsibly sourced gems.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label",
+      "default": "Read our story"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "t:labels.cta_url"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rukma_editorial_narrative.name"
+    }
+  ]
+}
+{% endschema %}

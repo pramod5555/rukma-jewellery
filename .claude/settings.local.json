@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(shopify version *)",
+      "Bash(shopify theme *)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :9292)"
+    ]
+  }
+}

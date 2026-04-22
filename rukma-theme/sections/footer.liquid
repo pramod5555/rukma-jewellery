@@ -1,39 +1,280 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+<footer class="rukma-footer">
+  <div class="rukma-footer__inner">
+    <div class="rukma-footer__grid">
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+      <div class="rukma-footer__brand">
+        <a href="{{ routes.root_url }}" class="rukma-footer__logo">{{ shop.name }}</a>
+        {%- if section.settings.tagline != blank -%}
+          <p class="rukma-footer__tagline">{{ section.settings.tagline | escape }}</p>
+        {%- endif -%}
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+        {%- if section.settings.show_newsletter -%}
+          <div class="rukma-footer__newsletter">
+            <p class="rukma-footer__newsletter-heading">{{ 'footer.newsletter_heading' | t }}</p>
+            {%- form 'customer' -%}
+              {%- if form.posted_successfully? -%}
+                <p class="rukma-footer__newsletter-success">{{ 'footer.newsletter_success' | t }}</p>
+              {%- else -%}
+                <div class="rukma-footer__newsletter-form">
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input
+                    type="email"
+                    name="contact[email]"
+                    class="rukma-footer__email-input"
+                    placeholder="{{ 'footer.email_placeholder' | t }}"
+                    required
+                    autocomplete="email"
+                  >
+                  <button type="submit" class="rukma-footer__subscribe-btn">
+                    {{- 'footer.subscribe' | t -}}
+                  </button>
+                </div>
+              {%- endif -%}
+            {%- endform -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.menu != blank -%}
+        <nav class="rukma-footer__nav" aria-label="{{ 'footer.navigation' | t }}">
+          <p class="rukma-footer__nav-heading">{{ 'footer.explore' | t }}</p>
+          <ul class="rukma-footer__nav-list">
+            {%- for link in section.settings.menu.links -%}
+              <li>
+                <a href="{{ link.url }}" class="rukma-footer__nav-link">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      <div class="rukma-footer__trust">
+        <p class="rukma-footer__nav-heading">{{ 'footer.crafted_in' | t }}</p>
+        <p class="rukma-footer__trust-text">{{ 'footer.trust_text' | t }}</p>
+
+        {%- if section.settings.show_payment_icons -%}
+          <div class="rukma-footer__payment">
+            {%- for type in shop.enabled_payment_types -%}
+              {{ type | payment_type_svg_tag: class: 'rukma-footer__payment-icon' }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    <div class="rukma-footer__bottom">
+      <p class="rukma-footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'footer.rights_reserved' | t }}
+      </p>
+      <p class="rukma-footer__powered">{{ powered_by_link }}</p>
+    </div>
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
+  .rukma-footer {
+    background: #1a0f0c;
+    color: #d6c9bb;
+    padding: 6rem 2rem 2.5rem;
+  }
+
+  .rukma-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .rukma-footer__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 5rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid rgba(214, 201, 187, 0.12);
+  }
+
+  .rukma-footer__logo {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    color: #F5EDE0;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .rukma-footer__tagline {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: rgba(214, 201, 187, 0.55);
+    line-height: 1.8;
+    max-width: 280px;
+    margin-bottom: 2.5rem;
+  }
+
+  .rukma-footer__newsletter-heading {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: rgba(214, 201, 187, 0.55);
+    margin-bottom: 0.85rem;
+  }
+
+  .rukma-footer__newsletter-form {
+    display: flex;
+    gap: 0;
+    max-width: 320px;
+  }
+
+  .rukma-footer__email-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(214, 201, 187, 0.2);
+    border-right: none;
+    color: #F5EDE0;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .rukma-footer__email-input::placeholder {
+    color: rgba(214, 201, 187, 0.35);
+  }
+
+  .rukma-footer__email-input:focus {
+    border-color: rgba(214, 201, 187, 0.5);
+  }
+
+  .rukma-footer__subscribe-btn {
+    background: var(--color-velvet, #731C28);
+    color: #F5EDE0;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .rukma-footer__subscribe-btn:hover {
+    background: #5e1620;
+  }
+
+  .rukma-footer__newsletter-success {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--color-gold, #C4A76D);
+  }
+
+  .rukma-footer__nav-heading {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: var(--letter-spacing-label, 0.2em);
+    text-transform: uppercase;
+    color: rgba(214, 201, 187, 0.4);
+    margin-bottom: 1.25rem;
+  }
+
+  .rukma-footer__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .rukma-footer__nav-link {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: rgba(214, 201, 187, 0.7);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .rukma-footer__nav-link:hover {
+    color: #F5EDE0;
+  }
+
+  .rukma-footer__trust-text {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: rgba(214, 201, 187, 0.55);
+    letter-spacing: 0.03em;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 220px;
+  }
+
+  .rukma-footer__payment {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .rukma-footer__payment-icon {
+    height: 22px;
+    width: auto;
+    opacity: 0.45;
+    filter: grayscale(1) brightness(2);
+  }
+
+  .rukma-footer__bottom {
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
+    align-items: center;
+    padding-top: 2rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
+
+  .rukma-footer__copyright,
+  .rukma-footer__powered {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: rgba(214, 201, 187, 0.3);
   }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
+
+  .rukma-footer__powered a {
+    color: inherit;
+  }
+
+  @media (max-width: 900px) {
+    .rukma-footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .rukma-footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .rukma-footer {
+      padding: 4rem 1.25rem 2rem;
+    }
+
+    .rukma-footer__grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .rukma-footer__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 {% endstylesheet %}
 
@@ -42,9 +283,21 @@
   "name": "t:general.footer",
   "settings": [
     {
+      "type": "text",
+      "id": "tagline",
+      "label": "t:labels.tagline",
+      "default": "Handcrafted jewellery rooted in Indian heritage"
+    },
+    {
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "t:labels.show_newsletter",
+      "default": true
     },
     {
       "type": "checkbox",

@@ -1,0 +1,302 @@
+<section
+  class="rukma-collection-listing"
+  style="
+    --rukma-collection-bg: {{ section.settings.background_color }};
+    --rukma-collection-surface: {{ section.settings.surface_color }};
+    --rukma-collection-accent: {{ section.settings.accent_color }};
+  "
+>
+  <header class="rukma-collection-listing-header">
+    <div>
+      {%- if section.settings.breadcrumb != blank -%}
+        <p class="rukma-collection-listing-breadcrumb">{{ section.settings.breadcrumb | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="rukma-collection-listing-heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.filter_label != blank -%}
+      <button class="rukma-collection-listing-filter" type="button">
+        <span>{{ section.settings.filter_label | escape }}</span>
+        <span aria-hidden="true">+</span>
+      </button>
+    {%- endif -%}
+  </header>
+
+  <div class="rukma-collection-listing-grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product' -%}
+        <a
+          href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+          class="rukma-collection-listing-card{% if block.settings.featured %} rukma-collection-listing-card-featured{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="rukma-collection-listing-media{% if block.settings.featured %} rukma-collection-listing-media-featured{% endif %}">
+            {%- if block.settings.image -%}
+              <img
+                src="{{ block.settings.image | img_url: '1400x' }}"
+                alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                class="rukma-collection-listing-image"
+                width="1400"
+                height="1750"
+                loading="lazy"
+              >
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'rukma-collection-listing-image rukma-collection-listing-placeholder' }}
+            {%- endif -%}
+            {%- if block.settings.badge != blank -%}
+              <span class="rukma-collection-listing-badge">{{ block.settings.badge | escape }}</span>
+            {%- endif -%}
+          </div>
+          <div class="rukma-collection-listing-info">
+            <div>
+              <h2 class="rukma-collection-listing-title">{{ block.settings.title | escape }}</h2>
+              <p class="rukma-collection-listing-subtitle">{{ block.settings.subtitle | escape }}</p>
+            </div>
+            <p class="rukma-collection-listing-price">{{ block.settings.price | escape }}</p>
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="rukma-collection-listing-pagination">
+    {%- if section.settings.count_label != blank -%}
+      <p class="rukma-collection-listing-count">{{ section.settings.count_label | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.load_more_label != blank -%}
+      <a href="{{ section.settings.load_more_link | default: routes.all_products_collection_url }}" class="rukma-collection-listing-load">
+        {{ section.settings.load_more_label | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-collection-listing,
+  .rukma-collection-listing * {
+    border-radius: 0;
+  }
+
+  .rukma-collection-listing {
+    background: var(--rukma-collection-bg, var(--color-bg));
+    color: var(--color-text);
+    font-family: var(--font-body);
+    padding: 8rem var(--page-margin);
+  }
+
+  .rukma-collection-listing-header,
+  .rukma-collection-listing-grid,
+  .rukma-collection-listing-pagination {
+    max-width: var(--page-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .rukma-collection-listing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+
+  .rukma-collection-listing-breadcrumb,
+  .rukma-collection-listing-filter,
+  .rukma-collection-listing-subtitle,
+  .rukma-collection-listing-badge,
+  .rukma-collection-listing-count,
+  .rukma-collection-listing-load {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+  }
+
+  .rukma-collection-listing-breadcrumb {
+    margin: 0 0 1rem;
+    font-size: 0.62rem;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-collection-listing-heading {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    line-height: 0.95;
+    color: var(--rukma-collection-accent, var(--color-velvet));
+  }
+
+  .rukma-collection-listing-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    border: 0;
+    background: var(--rukma-collection-surface, var(--color-surface));
+    color: var(--color-text);
+    padding: 0.95rem 1.4rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+  }
+
+  .rukma-collection-listing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5rem 2rem;
+  }
+
+  .rukma-collection-listing-card {
+    color: var(--color-text);
+  }
+
+  .rukma-collection-listing-card-featured {
+    grid-column: span 2;
+  }
+
+  .rukma-collection-listing-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--rukma-collection-surface, var(--color-surface));
+  }
+
+  .rukma-collection-listing-media-featured {
+    aspect-ratio: 16 / 9;
+  }
+
+  .rukma-collection-listing-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+  }
+
+  .rukma-collection-listing-card:hover .rukma-collection-listing-image {
+    transform: scale(1.04);
+  }
+
+  .rukma-collection-listing-badge {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    padding: 0.35rem 0.7rem;
+    background: var(--rukma-collection-accent, var(--color-velvet));
+    color: var(--color-bg);
+    font-size: 0.58rem;
+  }
+
+  .rukma-collection-listing-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .rukma-collection-listing-title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.45rem;
+  }
+
+  .rukma-collection-listing-subtitle {
+    margin: 0;
+    font-size: 0.68rem;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-collection-listing-price {
+    margin: 0;
+    color: var(--rukma-collection-accent, var(--color-velvet));
+    white-space: nowrap;
+  }
+
+  .rukma-collection-listing-pagination {
+    padding-top: 6rem;
+    text-align: center;
+  }
+
+  .rukma-collection-listing-count {
+    margin: 0 0 1.5rem;
+    color: var(--color-text-secondary);
+    font-size: 0.6rem;
+  }
+
+  .rukma-collection-listing-load {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background: var(--rukma-collection-accent, var(--color-velvet));
+    color: var(--color-bg);
+    font-size: 0.7rem;
+  }
+
+  .rukma-collection-listing-placeholder {
+    opacity: 0.28;
+  }
+
+  @media (max-width: 900px) {
+    .rukma-collection-listing-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .rukma-collection-listing-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .rukma-collection-listing-grid,
+    .rukma-collection-listing-card-featured {
+      grid-template-columns: 1fr;
+      grid-column: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "RUKMA collection listing",
+  "settings": [
+    { "type": "text", "id": "breadcrumb", "label": "Breadcrumb", "default": "Collections / New Arrivals" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Handcrafted Curations</p>" },
+    { "type": "text", "id": "filter_label", "label": "Filter label", "default": "Filter & Sort" },
+    { "type": "text", "id": "count_label", "label": "Count label", "default": "Showing 7 of 42 Items" },
+    { "type": "text", "id": "load_more_label", "label": "Load more label", "default": "Load More Pieces" },
+    { "type": "url", "id": "load_more_link", "label": "Load more link" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F5EDE0" },
+    { "type": "color", "id": "surface_color", "label": "Surface color", "default": "#EDE6D8" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#731C28" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "checkbox", "id": "featured", "label": "Large featured card", "default": false },
+        { "type": "text", "id": "badge", "label": "Badge" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Mandala Heritage Choker" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Gold & Burmese Rubies" },
+        { "type": "text", "id": "price", "label": "Price", "default": "$4,250" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RUKMA collection listing",
+      "blocks": [
+        { "type": "product", "settings": { "featured": true, "badge": "New", "title": "Mandala Heritage Choker", "subtitle": "Gold & Burmese Rubies", "price": "$4,250" } },
+        { "type": "product", "settings": { "title": "Lotus Bloom Studs", "subtitle": "22k Gold & Basra Pearl", "price": "$890" } },
+        { "type": "product", "settings": { "title": "Vayu Kada Bracelet", "subtitle": "Gold & Zambian Emerald", "price": "$1,550" } },
+        { "type": "product", "settings": { "title": "Prithvi Uncut Ring", "subtitle": "Polki Diamond", "price": "$2,100" } },
+        { "type": "product", "settings": { "title": "Akasha Pendant", "subtitle": "Satin Finish Gold", "price": "$1,200" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

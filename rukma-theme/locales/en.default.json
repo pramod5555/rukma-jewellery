@@ -11,13 +11,21 @@
     "comment_form_email": "Email",
     "comment_form_name": "Name",
     "comment_form_submit": "Post",
-    "comment_form_title": "Add a comment"
+    "comment_form_title": "Add a comment",
+    "read_more": "Read more",
+    "back_to_blog": "Back to journal"
   },
   "cart": {
     "checkout": "Checkout",
-    "title": "Cart",
-    "update": "Update",
-    "remove": "Remove"
+    "title": "Your bag",
+    "update": "Update bag",
+    "remove": "Remove",
+    "empty": "Your bag is empty.",
+    "continue_shopping": "Continue shopping",
+    "order_summary": "Order summary",
+    "subtotal": "Subtotal",
+    "taxes_and_shipping": "Taxes and shipping calculated at checkout.",
+    "quantity": "Qty"
   },
   "customers": {
     "login": {
@@ -29,6 +37,18 @@
   },
   "collections": {
     "title": "Collections"
+  },
+  "footer": {
+    "newsletter_heading": "Stay connected",
+    "newsletter_description": "Receive stories, new arrivals & exclusive offers",
+    "email_placeholder": "Your email address",
+    "subscribe": "Subscribe",
+    "newsletter_success": "Thank you for subscribing.",
+    "navigation": "Footer navigation",
+    "explore": "Explore",
+    "crafted_in": "Crafted in India",
+    "trust_text": "Each piece is handcrafted by artisans in India, honouring generations of heritage.",
+    "rights_reserved": "All rights reserved."
   },
   "general": {
     "navigation": {

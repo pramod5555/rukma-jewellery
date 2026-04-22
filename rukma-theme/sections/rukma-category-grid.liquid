@@ -1,0 +1,181 @@
+<section class="rukma-category-grid">
+  <div class="rukma-category-grid__inner">
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="rukma-category-grid__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="rukma-category-grid__grid" style="--cols: {{ section.blocks.size | at_most: 4 | at_least: 2 }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category' -%}
+          <a
+            href="{{ block.settings.url | default: routes.all_products_collection_url }}"
+            class="rukma-category-card"
+            {{ block.shopify_attributes }}
+          >
+            <div class="rukma-category-card__img-wrap">
+              {%- if block.settings.image -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'rukma-category-card__img',
+                    alt: block.settings.image.alt | default: block.settings.label
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'rukma-category-card__img rukma-category-card__img--placeholder' }}
+              {%- endif -%}
+            </div>
+            <div class="rukma-category-card__label-wrap">
+              <span class="rukma-category-card__label">{{ block.settings.label | escape }}</span>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-category-grid {
+    background: var(--color-bg, #F5EDE0);
+    padding: 5rem 2rem 8rem;
+  }
+
+  .rukma-category-grid__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .rukma-category-grid__heading {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    letter-spacing: -0.01em;
+    color: var(--color-text, #2C2420);
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .rukma-category-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 3), 1fr);
+    gap: 2rem;
+  }
+
+  .rukma-category-card {
+    display: block;
+    cursor: pointer;
+  }
+
+  .rukma-category-card__img-wrap {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--color-surface, #EDE6D8);
+    margin-bottom: 1.5rem;
+  }
+
+  .rukma-category-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1);
+    opacity: 0.8;
+    transition: filter 0.7s ease, opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .rukma-category-card__img--placeholder {
+    opacity: 0.25;
+  }
+
+  .rukma-category-card:hover .rukma-category-card__img {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  .rukma-category-card__label-wrap {
+    text-align: center;
+  }
+
+  .rukma-category-card__label {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--color-text, #2C2420);
+    transition: color 0.2s;
+  }
+
+  .rukma-category-card:hover .rukma-category-card__label {
+    color: var(--color-velvet, #731C28);
+  }
+
+  @media (max-width: 768px) {
+    .rukma-category-grid__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .rukma-category-grid {
+      padding: 3rem 1.25rem 5rem;
+    }
+
+    .rukma-category-grid__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rukma_category_grid.name",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "t:sections.rukma_category_grid.block_name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:labels.image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:labels.text",
+          "default": "Heritage"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "t:labels.cta_url"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rukma_category_grid.name",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Heritage" } },
+        { "type": "category", "settings": { "label": "Men" } },
+        { "type": "category", "settings": { "label": "Women" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

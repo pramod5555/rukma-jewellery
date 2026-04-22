@@ -1,0 +1,373 @@
+<section
+  class="rukma-product-detail"
+  style="
+    --rukma-product-bg: {{ section.settings.background_color }};
+    --rukma-product-surface: {{ section.settings.surface_color }};
+    --rukma-product-accent: {{ section.settings.accent_color }};
+  "
+>
+  <div class="rukma-product-detail-main">
+    <div class="rukma-product-detail-media">
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | img_url: '1400x' }}"
+          alt="{{ section.settings.image.alt | default: section.settings.title | escape }}"
+          class="rukma-product-detail-image"
+          width="1400"
+          height="1750"
+          loading="eager"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'rukma-product-detail-image rukma-product-detail-placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="rukma-product-detail-copy">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="rukma-product-detail-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h1 class="rukma-product-detail-title">{{ section.settings.title | escape }}</h1>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="rukma-product-detail-subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.price != blank -%}
+        <p class="rukma-product-detail-price">{{ section.settings.price | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="rukma-product-detail-description">{{ section.settings.description }}</div>
+      {%- endif -%}
+
+      <div class="rukma-product-detail-specs">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'spec' -%}
+            <div class="rukma-product-detail-spec" {{ block.shopify_attributes }}>
+              <span class="rukma-product-detail-spec-label">{{ block.settings.label | escape }}</span>
+              <span class="rukma-product-detail-spec-value">{{ block.settings.value | escape }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="rukma-product-detail-actions">
+        {%- if section.settings.primary_cta_label != blank -%}
+          <a href="{{ section.settings.primary_cta_link | default: routes.cart_url }}" class="rukma-product-detail-primary">
+            {{ section.settings.primary_cta_label | escape }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.secondary_cta_label != blank -%}
+          <a href="{{ section.settings.secondary_cta_link | default: routes.root_url }}" class="rukma-product-detail-secondary">
+            {{ section.settings.secondary_cta_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="rukma-product-detail-related">
+    <div class="rukma-product-detail-related-header">
+      {%- if section.settings.related_heading != blank -%}
+        <h2 class="rukma-product-detail-related-title">{{ section.settings.related_heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.related_link_label != blank -%}
+        <a href="{{ section.settings.related_link | default: routes.all_products_collection_url }}" class="rukma-product-detail-related-link">
+          {{ section.settings.related_link_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="rukma-product-detail-related-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'related_product' -%}
+          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="rukma-product-detail-related-card" {{ block.shopify_attributes }}>
+            <div class="rukma-product-detail-related-media">
+              {%- if block.settings.image -%}
+                <img
+                  src="{{ block.settings.image | img_url: '1400x' }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  class="rukma-product-detail-related-image"
+                  width="1400"
+                  height="1867"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'product-2' | placeholder_svg_tag: 'rukma-product-detail-related-image rukma-product-detail-placeholder' }}
+              {%- endif -%}
+            </div>
+            <h3 class="rukma-product-detail-related-name">{{ block.settings.title | escape }}</h3>
+            <p class="rukma-product-detail-related-price">{{ block.settings.price | escape }}</p>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .rukma-product-detail,
+  .rukma-product-detail * {
+    border-radius: 0;
+  }
+
+  .rukma-product-detail {
+    background: var(--rukma-product-bg, var(--color-bg));
+    color: var(--color-text);
+    padding: 7rem var(--page-margin);
+    font-family: var(--font-body);
+  }
+
+  .rukma-product-detail-main {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(20rem, 5fr);
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .rukma-product-detail-media {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--rukma-product-surface, var(--color-surface));
+  }
+
+  .rukma-product-detail-image,
+  .rukma-product-detail-related-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+  }
+
+  .rukma-product-detail-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .rukma-product-detail-eyebrow,
+  .rukma-product-detail-spec-label,
+  .rukma-product-detail-primary,
+  .rukma-product-detail-secondary,
+  .rukma-product-detail-related-link,
+  .rukma-product-detail-related-price {
+    font-family: var(--font-body);
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+  }
+
+  .rukma-product-detail-eyebrow {
+    margin: 0 0 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-product-detail-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    line-height: 1.02;
+    color: var(--rukma-product-accent, var(--color-velvet));
+  }
+
+  .rukma-product-detail-subtitle {
+    margin: 1rem 0 0;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-product-detail-price {
+    margin: 0;
+    font-size: 2.4rem;
+    color: var(--color-text);
+  }
+
+  .rukma-product-detail-description {
+    max-width: 32rem;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+  }
+
+  .rukma-product-detail-specs {
+    border-top: 1px solid color-mix(in srgb, var(--color-text-secondary) 25%, transparent);
+    padding-top: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .rukma-product-detail-spec {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .rukma-product-detail-spec-label {
+    font-size: 0.62rem;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-product-detail-spec-value {
+    text-align: right;
+    font-size: 0.9rem;
+  }
+
+  .rukma-product-detail-actions {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .rukma-product-detail-primary,
+  .rukma-product-detail-secondary {
+    display: block;
+    text-align: center;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.72rem;
+  }
+
+  .rukma-product-detail-primary {
+    background: var(--rukma-product-accent, var(--color-velvet));
+    color: var(--color-bg);
+  }
+
+  .rukma-product-detail-secondary {
+    border: 1px solid color-mix(in srgb, var(--color-text-secondary) 30%, transparent);
+    color: var(--color-text);
+  }
+
+  .rukma-product-detail-related {
+    max-width: var(--page-width);
+    margin: 10rem auto 0;
+  }
+
+  .rukma-product-detail-related-header {
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .rukma-product-detail-related-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--rukma-product-accent, var(--color-velvet));
+  }
+
+  .rukma-product-detail-related-link {
+    font-size: 0.68rem;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-product-detail-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3rem;
+  }
+
+  .rukma-product-detail-related-media {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--rukma-product-surface, var(--color-surface));
+  }
+
+  .rukma-product-detail-related-name {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .rukma-product-detail-related-price {
+    margin: 0;
+    font-size: 0.62rem;
+    color: var(--color-text-secondary);
+  }
+
+  .rukma-product-detail-placeholder {
+    opacity: 0.28;
+  }
+
+  @media (max-width: 900px) {
+    .rukma-product-detail-main,
+    .rukma-product-detail-related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rukma-product-detail-related-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "RUKMA product detail",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Product image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Heritage Collection" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Mandala Heritage Choker" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "22k Gold & Burmese Rubies" },
+    { "type": "text", "id": "price", "label": "Price", "default": "₹3,58,000" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>A masterpiece of archival craftsmanship. This piece features hand-chased gold work following traditional mandala motifs, punctuated by ethically sourced rubies that capture the light with deep, rhythmic intensity.</p>" },
+    { "type": "text", "id": "primary_cta_label", "label": "Primary button label", "default": "Add to bag" },
+    { "type": "url", "id": "primary_cta_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_cta_label", "label": "Secondary button label", "default": "Consult a curator" },
+    { "type": "url", "id": "secondary_cta_link", "label": "Secondary button link" },
+    { "type": "text", "id": "related_heading", "label": "Related heading", "default": "To Complete the Ensemble" },
+    { "type": "text", "id": "related_link_label", "label": "Related link label", "default": "View all shop" },
+    { "type": "url", "id": "related_link", "label": "Related link" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F5EDE0" },
+    { "type": "color", "id": "surface_color", "label": "Surface color", "default": "#EDE6D8" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#731C28" }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Specification",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Purity" },
+        { "type": "text", "id": "value", "label": "Value", "default": "22 Karat Yellow Gold" }
+      ]
+    },
+    {
+      "type": "related_product",
+      "name": "Related product",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Mandala Ruby Studs" },
+        { "type": "text", "id": "price", "label": "Price", "default": "₹1,56,000" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RUKMA product detail",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "Purity", "value": "22 Karat Yellow Gold" } },
+        { "type": "spec", "settings": { "label": "Gemstones", "value": "12.4ct Burmese Rubies" } },
+        { "type": "spec", "settings": { "label": "Technique", "value": "Traditional Chasing & Repoussé" } },
+        { "type": "related_product", "settings": { "title": "Mandala Ruby Studs", "price": "₹1,56,000" } },
+        { "type": "related_product", "settings": { "title": "Heritage Mandala Ring", "price": "₹1,01,000" } },
+        { "type": "related_product", "settings": { "title": "Heritage Chased Bangle", "price": "₹2,02,000" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
