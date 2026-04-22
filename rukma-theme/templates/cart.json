@@ -1,20 +1,75 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "cart",
-      "settings": {}
+    "rukma-shopping-bag": {
+      "type": "rukma-shopping-bag",
+      "blocks": {
+        "bag-item-1": {
+          "type": "bag_item",
+          "settings": {
+            "title": "Varanasi Bloom Necklace",
+            "price": "$1,250",
+            "meta": "22k Gold • Natural Ruby",
+            "quantity": "01"
+          }
+        },
+        "bag-item-2": {
+          "type": "bag_item",
+          "settings": {
+            "title": "Solaris Filigree Hoops",
+            "price": "$880",
+            "meta": "Hand-forged Gold • Matte Finish",
+            "quantity": "01"
+          }
+        },
+        "complement-1": {
+          "type": "complement",
+          "settings": {
+            "title": "Arcadia Bangle",
+            "price": "$540"
+          }
+        },
+        "complement-2": {
+          "type": "complement",
+          "settings": {
+            "title": "Raw Emerald Solitaire",
+            "price": "$1,100"
+          }
+        },
+        "complement-3": {
+          "type": "complement",
+          "settings": {
+            "title": "Dewdrop Pearl Drops",
+            "price": "$420"
+          }
+        }
+      },
+      "block_order": [
+        "bag-item-1",
+        "bag-item-2",
+        "complement-1",
+        "complement-2",
+        "complement-3"
+      ],
+      "settings": {
+        "heading": "Your Bag",
+        "subheading": "Selection of Handcrafted Curations",
+        "quantity_label": "Qty",
+        "remove_label": "Remove",
+        "summary_heading": "Bag Summary",
+        "subtotal": "$2,130",
+        "shipping": "Complimentary",
+        "total": "$2,130",
+        "checkout_label": "Proceed to Checkout",
+        "assurance_one": "Secured & encrypted artisanal transaction",
+        "assurance_two": "White-glove delivery within 7-10 days",
+        "complements_heading": "To Complement Your Curations",
+        "background_color": "#F5EDE0",
+        "surface_color": "#EDE6D8",
+        "accent_color": "#731C28"
+      }
     }
   },
   "order": [
-    "main"
+    "rukma-shopping-bag"
   ]
 }

@@ -1,7 +1,16 @@
 <header class="rukma-header" role="banner">
   <div class="rukma-header__inner">
     <a href="{{ routes.root_url }}" class="rukma-header__logo">
-      {{ section.settings.logo_text | default: 'RUKMA' }}
+      <span class="rukma-header__logo-mark" aria-hidden="true">
+        <img
+          src="{{ 'rukma-bird-maroon.png' | asset_url }}"
+          alt=""
+          width="600"
+          height="600"
+          loading="eager"
+        >
+      </span>
+      <span class="rukma-header__logo-text">{{ section.settings.logo_text | default: 'RUKMA' }}</span>
     </a>
 
     <nav class="rukma-header__nav" aria-label="{{ 'general.navigation.main' | t }}">
@@ -57,7 +66,18 @@
 >
   <div class="rukma-nav-overlay__inner">
     <div class="rukma-nav-overlay__top">
-      <span class="rukma-nav-overlay__brand">{{ section.settings.logo_text | default: 'RUKMA' }}</span>
+      <span class="rukma-nav-overlay__brand">
+        <span class="rukma-header__logo-mark" aria-hidden="true">
+          <img
+            src="{{ 'rukma-bird-maroon.png' | asset_url }}"
+            alt=""
+            width="600"
+            height="600"
+            loading="eager"
+          >
+        </span>
+        <span class="rukma-header__logo-text">{{ section.settings.logo_text | default: 'RUKMA' }}</span>
+      </span>
       <button
         class="rukma-nav-overlay__close"
         aria-label="{{ 'general.navigation.close_menu' | t }}"
@@ -104,6 +124,9 @@
   }
 
   .rukma-header__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
     font-family: var(--font-heading);
     font-weight: 300;
     font-size: 1rem;
@@ -112,6 +135,24 @@
     color: var(--color-text);
     justify-self: start;
     white-space: nowrap;
+  }
+
+  .rukma-header__logo-mark {
+    display: inline-flex;
+    width: 2.1rem;
+    height: 2.1rem;
+    overflow: hidden;
+  }
+
+  .rukma-header__logo-mark img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+  }
+
+  .rukma-header__logo-text {
+    display: inline-block;
   }
 
   .rukma-header__nav {
@@ -212,6 +253,9 @@
   }
 
   .rukma-nav-overlay__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
     font-family: var(--font-heading);
     font-weight: 300;
     font-size: 1.1rem;
@@ -263,6 +307,12 @@
       font-size: 0.95rem;
       letter-spacing: 0.32em;
       min-width: 0;
+      gap: 0.7rem;
+    }
+
+    .rukma-header__logo-mark {
+      width: 1.55rem;
+      height: 1.55rem;
     }
 
     .rukma-header__nav {
