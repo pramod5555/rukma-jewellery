@@ -86,8 +86,7 @@
   {%- endif -%}
 
   <a class="rph-cta" href="/pages/home">
-    <span class="rph-cta__text">Enter</span>
-    <span class="rph-cta__line"></span>
+    <span class="rph-cta__btn">Shop</span>
   </a>
 
 </div>
@@ -224,52 +223,39 @@
 
   .rph-cta {
     position: absolute;
-    bottom: 3.5rem;
+    bottom: 3rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
     text-decoration: none;
-    cursor: pointer;
     opacity: 0;
     animation: rph-cta-appear 1.2s ease forwards;
     animation-delay: 2s;
   }
 
-  .rph-cta__text {
+  .rph-cta__btn {
+    display: inline-block;
     font-family: 'Cormorant Garamond', 'Newsreader', Georgia, serif;
-    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
-    font-weight: 300;
-    letter-spacing: 0.45em;
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    font-weight: 400;
+    letter-spacing: 0.4em;
     text-transform: uppercase;
     color: #F5EDE0;
-    opacity: 0.85;
+    background: #731C28;
+    border: none;
+    padding: 1rem 2.8rem;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
   }
 
-  .rph-cta__line {
-    display: block;
-    width: 1px;
-    height: 52px;
-    background: linear-gradient(to bottom, rgba(245,237,224,0.8), transparent);
-    transform: scaleY(0);
-    transform-origin: top;
-    animation: rph-cta-line 2s ease-in-out infinite;
-    animation-delay: 2.4s;
+  .rph-cta__btn:hover {
+    background: #5a1520;
+    color: #F5EDE0;
   }
 
   @keyframes rph-cta-appear {
     from { opacity: 0; transform: translateX(-50%) translateY(8px); }
     to   { opacity: 1; transform: translateX(-50%) translateY(0);   }
-  }
-
-  @keyframes rph-cta-line {
-    0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
-    30%  { opacity: 1; }
-    70%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
-    100% { transform: scaleY(1); transform-origin: top; opacity: 0; }
   }
 
   /* ─── ENTRANCE ANIMATION ─────────────────────────────────────────── */
