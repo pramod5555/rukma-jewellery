@@ -1,5 +1,9 @@
 {
   "sections": {
+    "hero-painting-parallax": {
+      "type": "hero-painting-parallax",
+      "settings": {}
+    },
     "rukma-landing-page": {
       "type": "rukma-landing-page",
       "blocks": {
@@ -79,6 +83,7 @@
     }
   },
   "order": [
+    "hero-painting-parallax",
     "rukma-landing-page"
   ]
 }

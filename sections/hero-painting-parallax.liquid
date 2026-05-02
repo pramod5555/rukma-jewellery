@@ -1,0 +1,563 @@
+{% comment %}
+  RUKMA — Scroll-Driven Parallax Painting Hero
+  Section: hero-painting-parallax
+  
+  HOW IT WORKS:
+  - Background painting is fixed (parallax at 0 speed — pure fixed attachment)
+  - Left figure drifts in from left edge as user scrolls
+  - Right figure drifts in from right edge as user scrolls
+  - A soft golden glow blooms at center when figures are close
+  - Full-viewport height, no UI chrome, pure painting experience
+  
+  ASSETS REQUIRED (upload to Shopify Files or CDN):
+  - bg_painting.jpg      — The full landscape/background painting (16:9 or wider)
+  - figure_left.png      — Left figure cut out, transparent background
+  - figure_right.png     — Right figure cut out, transparent background
+  (If you only have a flat single painting, use it as bg_painting and leave figures empty in schema)
+{% endcomment %}
+
+<div
+  class="rukma-painting-hero"
+  id="rukma-painting-hero"
+  data-scroll-speed-bg="{{ section.settings.scroll_speed_bg }}"
+  data-scroll-speed-left="{{ section.settings.scroll_speed_left }}"
+  data-scroll-speed-right="{{ section.settings.scroll_speed_right }}"
+>
+
+  <!-- Fixed background painting layer -->
+  <div class="rph-bg" id="rph-bg">
+    {%- if section.settings.bg_painting != blank -%}
+      <img
+        src="{{ section.settings.bg_painting | image_url: width: 2400 }}"
+        alt=""
+        class="rph-bg__img"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- else -%}
+      <!-- Placeholder gradient — replace with actual painting -->
+      <div class="rph-bg__placeholder"></div>
+    {%- endif -%}
+  </div>
+
+  <!-- Vignette overlay — deepens edges, focuses center -->
+  <div class="rph-vignette"></div>
+
+  <!-- Left figure layer -->
+  {%- if section.settings.figure_left != blank -%}
+  <div class="rph-figure rph-figure--left" id="rph-fig-left">
+    <img
+      src="{{ section.settings.figure_left | image_url: width: 900 }}"
+      alt="{{ section.settings.figure_left_alt | default: '' }}"
+      class="rph-figure__img"
+      loading="eager"
+    >
+  </div>
+  {%- endif -%}
+
+  <!-- Right figure layer -->
+  {%- if section.settings.figure_right != blank -%}
+  <div class="rph-figure rph-figure--right" id="rph-fig-right">
+    <img
+      src="{{ section.settings.figure_right | image_url: width: 900 }}"
+      alt="{{ section.settings.figure_right_alt | default: '' }}"
+      class="rph-figure__img"
+      loading="eager"
+    >
+  </div>
+  {%- endif -%}
+
+  <!-- Central glow — blooms as figures converge -->
+  <div class="rph-glow" id="rph-glow"></div>
+
+  <!-- Brand wordmark overlay (optional) -->
+  {%- if section.settings.show_wordmark -%}
+  <div class="rph-wordmark" id="rph-wordmark">
+    {%- if section.settings.wordmark_image != blank -%}
+      <img
+        src="{{ section.settings.wordmark_image | image_url: width: 400 }}"
+        alt="{{ shop.name }}"
+        class="rph-wordmark__img"
+      >
+    {%- else -%}
+      <span class="rph-wordmark__text">{{ section.settings.wordmark_text | default: shop.name }}</span>
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+
+  <!-- Scroll hint -->
+  {%- if section.settings.show_scroll_hint -%}
+  <div class="rph-scroll-hint" id="rph-scroll-hint">
+    <span class="rph-scroll-hint__line"></span>
+  </div>
+  {%- endif -%}
+
+</div>
+
+<style>
+  /* ─── RESET & CONTAINER ──────────────────────────────────────────── */
+  .rukma-painting-hero {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.hero_height | default: 100 }}vh;
+    min-height: 500px;
+    overflow: hidden;
+    background: {{ section.settings.fallback_bg_color | default: '#1a0a05' }};
+    /* Contain stacking context */
+    isolation: isolate;
+  }
+
+  /* ─── BACKGROUND LAYER ───────────────────────────────────────────── */
+  .rph-bg {
+    position: absolute;
+    inset: -15% -5%;          /* oversized so parallax pan has room */
+    z-index: 1;
+    will-change: transform;
+  }
+
+  .rph-bg__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .rph-bg__placeholder {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, #3d1a0e 0%, #1a0a05 70%);
+  }
+
+  /* ─── VIGNETTE ───────────────────────────────────────────────────── */
+  .rph-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(10,4,2,0.55) 100%),
+      linear-gradient(to bottom, rgba(10,4,2,0.25) 0%, transparent 20%, transparent 80%, rgba(10,4,2,0.4) 100%);
+    pointer-events: none;
+  }
+
+  /* ─── FIGURE LAYERS ──────────────────────────────────────────────── */
+  .rph-figure {
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+    width: {{ section.settings.figure_width | default: 45 }}%;
+    max-width: 680px;
+    will-change: transform;
+    /* Start offscreen — JS moves them in on scroll */
+  }
+
+  .rph-figure--left {
+    left: 0;
+    transform: translateX(-8%) translateY(2%);
+    transform-origin: bottom left;
+  }
+
+  .rph-figure--right {
+    right: 0;
+    transform: translateX(8%) translateY(2%);
+    transform-origin: bottom right;
+  }
+
+  .rph-figure__img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Subtle bottom fade so figures blend into any background */
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 12%);
+    mask-image: linear-gradient(to top, transparent 0%, black 12%);
+  }
+
+  /* ─── CENTRAL GLOW ───────────────────────────────────────────────── */
+  .rph-glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.3);
+    width: 40vw;
+    height: 40vw;
+    max-width: 600px;
+    max-height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba({{ section.settings.glow_color_rgb | default: '196,167,109' }}, 0.55) 0%,
+      rgba({{ section.settings.glow_color_rgb | default: '196,167,109' }}, 0.18) 40%,
+      transparent 70%
+    );
+    z-index: 2;
+    opacity: 0;
+    will-change: transform, opacity;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  /* ─── WORDMARK ───────────────────────────────────────────────────── */
+  .rph-wordmark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+  }
+
+  .rph-wordmark__img {
+    width: 200px;
+    max-width: 30vw;
+    height: auto;
+    filter: brightness(0) invert(1);  /* white logo */
+  }
+
+  .rph-wordmark__text {
+    font-family: 'Cormorant Garamond', 'Newsreader', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #F5EDE0;
+  }
+
+  /* ─── SCROLL HINT ────────────────────────────────────────────────── */
+  .rph-scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+  }
+
+  .rph-scroll-hint__line {
+    display: block;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(245,237,224,0.7), transparent);
+    animation: rph-line-drop 2s ease-in-out infinite;
+  }
+
+  @keyframes rph-line-drop {
+    0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    30%  { opacity: 1; }
+    70%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(1); transform-origin: top; opacity: 0; }
+  }
+
+  /* ─── ENTRANCE ANIMATION ─────────────────────────────────────────── */
+  .rukma-painting-hero.is-loaded .rph-figure--left {
+    animation: rph-enter-left 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .rukma-painting-hero.is-loaded .rph-figure--right {
+    animation: rph-enter-right 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  }
+  .rukma-painting-hero.is-loaded .rph-wordmark {
+    opacity: 1;
+    transition-delay: 1.2s;
+  }
+
+  @keyframes rph-enter-left {
+    from { transform: translateX(-40%) translateY(2%); opacity: 0; }
+    to   { transform: translateX(-8%) translateY(2%);  opacity: 1; }
+  }
+  @keyframes rph-enter-right {
+    from { transform: translateX(40%) translateY(2%); opacity: 0; }
+    to   { transform: translateX(8%) translateY(2%);  opacity: 1; }
+  }
+
+  /* ─── MOBILE ─────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .rph-figure {
+      width: 55%;
+    }
+    .rph-wordmark__img {
+      width: 140px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .rph-figure {
+      width: 62%;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  'use strict';
+
+  const hero    = document.getElementById('rukma-painting-hero');
+  const bg      = document.getElementById('rph-bg');
+  const figLeft = document.getElementById('rph-fig-left');
+  const figRight= document.getElementById('rph-fig-right');
+  const glow    = document.getElementById('rph-glow');
+  const hint    = document.getElementById('rph-scroll-hint');
+
+  if (!hero) return;
+
+  // Config — these mirror the section settings passed via data attributes
+  const SPEED_BG    = parseFloat(hero.dataset.scrollSpeedBg)    || 0.25;
+  const SPEED_LEFT  = parseFloat(hero.dataset.scrollSpeedLeft)  || 0.55;
+  const SPEED_RIGHT = parseFloat(hero.dataset.scrollSpeedRight) || 0.45;
+
+  const heroHeight = hero.offsetHeight;
+  let   ticking    = false;
+  let   lastY      = 0;
+  let   animationId;
+
+  // ── ENTRANCE ───────────────────────────────────────────────────────
+  // Trigger entrance animation on load (not scroll-dependent)
+  function onLoaded() {
+    hero.classList.add('is-loaded');
+  }
+
+  if (document.readyState === 'complete') {
+    // Small delay so the user sees the initial state before figures fly in
+    setTimeout(onLoaded, 200);
+  } else {
+    window.addEventListener('load', function() { setTimeout(onLoaded, 200); });
+  }
+
+  // ── SCROLL PARALLAX ────────────────────────────────────────────────
+  function applyParallax(scrollY) {
+    // How far through the hero have we scrolled (0 = at top, 1 = hero fully scrolled past)
+    const heroTop   = hero.getBoundingClientRect().top + scrollY;
+    const progress  = Math.max(0, Math.min(1, (scrollY - heroTop) / heroHeight));
+
+    // Background — slow vertical drift upward
+    if (bg) {
+      const bgShift = scrollY * SPEED_BG;
+      bg.style.transform = `translateY(${bgShift}px)`;
+    }
+
+    // Left figure — drifts slightly right and up as you scroll
+    if (figLeft) {
+      const xShift = progress * 4;           // drifts toward center px%
+      const yShift = scrollY * SPEED_LEFT;   // rises faster than bg
+      // Keep the entrance translateX baseline, add scroll delta on top
+      const baseX = -8;
+      figLeft.style.transform = `translateX(${baseX + xShift}%) translateY(${-yShift * 0.12}px)`;
+    }
+
+    // Right figure — mirrors left
+    if (figRight) {
+      const xShift = progress * 4;
+      const yShift = scrollY * SPEED_RIGHT;
+      const baseX = 8;
+      figRight.style.transform = `translateX(${-(baseX + xShift)}%) translateY(${-yShift * 0.12}px)`;
+    }
+
+    // Glow — blooms as figures converge (progress 0.2 → 0.7 range)
+    if (glow) {
+      const glowStart    = 0.15;
+      const glowPeak     = 0.55;
+      const glowProgress = Math.max(0, Math.min(1, (progress - glowStart) / (glowPeak - glowStart)));
+      const glowScale    = 0.3 + glowProgress * 0.9;
+      const glowOpacity  = glowProgress * 0.85;
+      glow.style.transform = `translate(-50%, -50%) scale(${glowScale})`;
+      glow.style.opacity   = glowOpacity;
+    }
+
+    // Hide scroll hint once user starts scrolling
+    if (hint && scrollY > 60) {
+      hint.style.opacity = '0';
+      hint.style.pointerEvents = 'none';
+    } else if (hint && scrollY <= 60) {
+      hint.style.opacity = '1';
+    }
+  }
+
+  // ── RAF-THROTTLED SCROLL HANDLER ───────────────────────────────────
+  function onScroll() {
+    lastY = window.scrollY;
+    if (!ticking) {
+      animationId = requestAnimationFrame(function() {
+        applyParallax(lastY);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Run once on mount so initial state is correct
+  applyParallax(window.scrollY);
+
+  // ── CLEANUP ────────────────────────────────────────────────────────
+  // Shopify sections can be hot-reloaded in the editor
+  document.addEventListener('shopify:section:unload', function(e) {
+    if (e.detail.sectionId === hero.closest('[id^="shopify-section"]')?.id) {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(animationId);
+    }
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Painting Hero",
+  "tag": "section",
+  "class": "rukma-hero-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Paintings"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_painting",
+      "label": "Background painting",
+      "info": "The full landscape/background artwork. Use a wide image (1920px+ width). JPG preferred."
+    },
+    {
+      "type": "image_picker",
+      "id": "figure_left",
+      "label": "Left figure (PNG with transparent background)",
+      "info": "The left foreground figure, cut out from background. Must be PNG."
+    },
+    {
+      "type": "text",
+      "id": "figure_left_alt",
+      "label": "Left figure alt text"
+    },
+    {
+      "type": "image_picker",
+      "id": "figure_right",
+      "label": "Right figure (PNG with transparent background)",
+      "info": "The right foreground figure, cut out from background. Must be PNG."
+    },
+    {
+      "type": "text",
+      "id": "figure_right_alt",
+      "label": "Right figure alt text"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "hero_height",
+      "label": "Hero height (vh)",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "figure_width",
+      "label": "Figure width (%)",
+      "min": 30,
+      "max": 60,
+      "step": 5,
+      "default": 45,
+      "info": "Width of each figure as % of viewport"
+    },
+    {
+      "type": "header",
+      "content": "Parallax speeds"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed_bg",
+      "label": "Background parallax speed",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 25,
+      "info": "Higher = moves more on scroll. 0 = fixed."
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed_left",
+      "label": "Left figure parallax speed",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 55
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed_right",
+      "label": "Right figure parallax speed",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Glow effect"
+    },
+    {
+      "type": "text",
+      "id": "glow_color_rgb",
+      "label": "Glow colour (R,G,B)",
+      "default": "196,167,109",
+      "info": "Antique gold by default. Enter as R,G,B e.g. 196,167,109"
+    },
+    {
+      "type": "header",
+      "content": "Wordmark"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wordmark",
+      "label": "Show brand wordmark",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "wordmark_image",
+      "label": "Wordmark image (PNG, white/transparent)",
+      "info": "Leave blank to use shop name as text"
+    },
+    {
+      "type": "text",
+      "id": "wordmark_text",
+      "label": "Wordmark text fallback"
+    },
+    {
+      "type": "header",
+      "content": "Scroll hint"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_hint",
+      "label": "Show scroll hint line",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "fallback_bg_color",
+      "label": "Background fallback colour",
+      "default": "#1a0a05",
+      "info": "Shown before painting loads or if no painting is set"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Painting Hero"
+    }
+  ]
+}
+{% endschema %}
