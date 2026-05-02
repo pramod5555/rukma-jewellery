@@ -85,12 +85,10 @@
   </div>
   {%- endif -%}
 
-  <!-- Scroll hint -->
-  {%- if section.settings.show_scroll_hint -%}
-  <div class="rph-scroll-hint" id="rph-scroll-hint">
-    <span class="rph-scroll-hint__line"></span>
-  </div>
-  {%- endif -%}
+  <a class="rph-cta" href="/pages/home">
+    <span class="rph-cta__text">Enter</span>
+    <span class="rph-cta__line"></span>
+  </a>
 
 </div>
 
@@ -224,30 +222,50 @@
     color: #F5EDE0;
   }
 
-  /* ─── SCROLL HINT ────────────────────────────────────────────────── */
-  .rph-scroll-hint {
+  .rph-cta {
     position: absolute;
-    bottom: 2.5rem;
+    bottom: 3.5rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    opacity: 1;
-    transition: opacity 0.4s ease;
+    gap: 0.6rem;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0;
+    animation: rph-cta-appear 1.2s ease forwards;
+    animation-delay: 2s;
   }
 
-  .rph-scroll-hint__line {
+  .rph-cta__text {
+    font-family: 'Cormorant Garamond', 'Newsreader', Georgia, serif;
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    font-weight: 300;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: #F5EDE0;
+    opacity: 0.85;
+  }
+
+  .rph-cta__line {
     display: block;
     width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, rgba(245,237,224,0.7), transparent);
-    animation: rph-line-drop 2s ease-in-out infinite;
+    height: 52px;
+    background: linear-gradient(to bottom, rgba(245,237,224,0.8), transparent);
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: rph-cta-line 2s ease-in-out infinite;
+    animation-delay: 2.4s;
   }
 
-  @keyframes rph-line-drop {
+  @keyframes rph-cta-appear {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0);   }
+  }
+
+  @keyframes rph-cta-line {
     0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
     30%  { opacity: 1; }
     70%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
@@ -301,7 +319,6 @@
   const figLeft = document.getElementById('rph-fig-left');
   const figRight= document.getElementById('rph-fig-right');
   const glow    = document.getElementById('rph-glow');
-  const hint    = document.getElementById('rph-scroll-hint');
 
   if (!hero) return;
 
@@ -374,14 +391,6 @@
       setTimeout(function() {
         window.location.href = '/pages/home';
       }, 320);
-    }
-
-    // Hide scroll hint once user starts scrolling
-    if (hint && scrollY > 60) {
-      hint.style.opacity = '0';
-      hint.style.pointerEvents = 'none';
-    } else if (hint && scrollY <= 60) {
-      hint.style.opacity = '1';
     }
   }
 
@@ -538,16 +547,6 @@
       "type": "text",
       "id": "wordmark_text",
       "label": "Wordmark text fallback"
-    },
-    {
-      "type": "header",
-      "content": "Scroll hint"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_scroll_hint",
-      "label": "Show scroll hint line",
-      "default": true
     },
     {
       "type": "header",
