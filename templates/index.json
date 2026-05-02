@@ -11,7 +11,21 @@
   "sections": {
     "hero-painting-parallax": {
       "type": "hero-painting-parallax",
-      "settings": {}
+      "settings": {
+        "bg_painting": "shopify://shop_images/619599311_18532415818065721_2504053319402991185_n.jpg",
+        "figure_left_alt": "",
+        "figure_right_alt": "",
+        "hero_height": 100,
+        "figure_width": 45,
+        "scroll_speed_bg": 25,
+        "scroll_speed_left": 55,
+        "scroll_speed_right": 45,
+        "glow_color_rgb": "196,167,109",
+        "show_wordmark": true,
+        "wordmark_text": "",
+        "show_scroll_hint": true,
+        "fallback_bg_color": "#1a0a05"
+      }
     }
   },
   "order": [
