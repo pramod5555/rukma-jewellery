@@ -369,6 +369,14 @@
       glow.style.opacity   = glowOpacity;
     }
 
+    const REDIRECT_THRESHOLD = 0.85;
+    if (progress >= REDIRECT_THRESHOLD && !hero.dataset.redirectFired) {
+      hero.dataset.redirectFired = 'true';
+      setTimeout(function() {
+        window.location.href = '/pages/home';
+      }, 320);
+    }
+
     // Hide scroll hint once user starts scrolling
     if (hint && scrollY > 60) {
       hint.style.opacity = '0';

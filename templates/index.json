@@ -12,87 +12,9 @@
     "hero-painting-parallax": {
       "type": "hero-painting-parallax",
       "settings": {}
-    },
-    "rukma-landing-page": {
-      "type": "rukma-landing-page",
-      "blocks": {
-        "product-card-1": {
-          "type": "product_card",
-          "settings": {
-            "category": "Necklace",
-            "title": "The Surya Choker",
-            "price": "₹42,000"
-          }
-        },
-        "product-card-2": {
-          "type": "product_card",
-          "settings": {
-            "category": "Earrings",
-            "title": "Verdant Bloom Studs",
-            "price": "₹28,500"
-          }
-        },
-        "product-card-3": {
-          "type": "product_card",
-          "settings": {
-            "category": "Ring",
-            "title": "Luna Orbit Ring",
-            "price": "₹18,900"
-          }
-        },
-        "product-card-4": {
-          "type": "product_card",
-          "settings": {
-            "category": "Bracelet",
-            "title": "Heritage Link",
-            "price": "₹56,000"
-          }
-        },
-        "category-1": {
-          "type": "category",
-          "settings": {
-            "label": "Heritage"
-          }
-        },
-        "category-2": {
-          "type": "category",
-          "settings": {
-            "label": "Men"
-          }
-        },
-        "category-3": {
-          "type": "category",
-          "settings": {
-            "label": "Women"
-          }
-        }
-      },
-      "block_order": [
-        "product-card-1",
-        "product-card-2",
-        "product-card-3",
-        "product-card-4",
-        "category-1",
-        "category-2",
-        "category-3"
-      ],
-      "settings": {
-        "eyebrow": "The Eternal Collection",
-        "heading": "<p>Poetry in<br>Gold &amp; Stone</p>",
-        "hero_cta_label": "Shop now",
-        "products_heading": "Curated Pieces",
-        "products_link_label": "View all archive",
-        "narrative_heading": "<p>Crafted for the modern <em>archivist.</em></p>",
-        "narrative_body": "<p>We believe in the quiet power of objects. Each piece is a conversation between traditional Indian craftsmanship and a global minimalist aesthetic, forged in 22k gold and responsibly sourced gems.</p>",
-        "narrative_cta_label": "Read our story",
-        "background_color": "#F5EDE0",
-        "surface_color": "#EDE6D8",
-        "accent_color": "#731C28"
-      }
     }
   },
   "order": [
-    "hero-painting-parallax",
-    "rukma-landing-page"
+    "hero-painting-parallax"
   ]
 }

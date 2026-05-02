@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "rukma-landing-page": {
+      "type": "rukma-landing-page",
+      "settings": {}
+    }
+  },
+  "order": ["rukma-landing-page"]
+}
