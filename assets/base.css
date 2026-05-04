@@ -1,3 +1,31 @@
+:root {
+  --font-logo: 'Playfair Display', Georgia, serif;
+  --font-heading: 'Nunito', 'Century Gothic', sans-serif;
+  --font-body: 'Inter', Helvetica, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+nav, .nav, [class*="nav"],
+[class*="menu"], [class*="header"] {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
 html, body {
   margin: 0;
   padding: 0;
