@@ -11,8 +11,26 @@
   "sections": {
     "rukma-landing-page": {
       "type": "rukma-landing-page",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/625847791_17951902098092744_126099027140403631_n.jpg",
+        "eyebrow": "The Eternal Collection",
+        "heading": "<p>Poetry in<br/>Gold & Stone</p>",
+        "hero_cta_label": "Shop now",
+        "hero_cta_link": "",
+        "products_heading": "Curated Pieces",
+        "products_link_label": "View all archive",
+        "products_link": "",
+        "narrative_heading": "<p>Crafted for the modern <em>archivist.</em></p>",
+        "narrative_body": "<p>We believe in the quiet power of objects. Each piece is a conversation between traditional Indian craftsmanship and a global minimalist aesthetic, forged in 22k gold and responsibly sourced gems.</p>",
+        "narrative_cta_label": "Read our story",
+        "narrative_cta_link": "",
+        "background_color": "#f5ede0",
+        "surface_color": "#ede6d8",
+        "accent_color": "#731c28"
+      }
     }
   },
-  "order": ["rukma-landing-page"]
+  "order": [
+    "rukma-landing-page"
+  ]
 }

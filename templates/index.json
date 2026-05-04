@@ -13,10 +13,8 @@
     "hero-painting-parallax": {
       "type": "hero-painting-parallax",
       "settings": {
-        "bg_painting": "shopify://shop_images/rukma_painting_3x_017be24e-8b1d-424c-b547-42287a6f8328.jpg",
-        "figure_left": "shopify://shop_images/apsara_left.png",
+        "bg_painting": "shopify://shop_images/rukma_landingpic_2.jpg",
         "figure_left_alt": "Left apsara",
-        "figure_right": "shopify://shop_images/apsara_right.png",
         "figure_right_alt": "Right apsara",
         "hero_height": 100,
         "figure_width": 45,
