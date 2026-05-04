@@ -1,10 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "layout": "blank",
   "sections": {
     "hero-painting-parallax": {
       "type": "hero-painting-parallax",
-      "settings": {}
+      "settings": {
+        "bg_painting": "shopify://shop_images/rukma_painting_3x_017be24e-8b1d-424c-b547-42287a6f8328.jpg",
+        "figure_left": "shopify://shop_images/apsara_left.png",
+        "figure_left_alt": "Left apsara",
+        "figure_right": "shopify://shop_images/apsara_right.png",
+        "figure_right_alt": "Right apsara",
+        "hero_height": 100,
+        "figure_width": 45,
+        "scroll_speed_bg": 25,
+        "scroll_speed_left": 55,
+        "scroll_speed_right": 45,
+        "glow_color_rgb": "196,167,109",
+        "show_wordmark": true,
+        "wordmark_text": "",
+        "fallback_bg_color": "#1a0a05"
+      }
     }
   },
-  "order": ["hero-painting-parallax"]
+  "order": [
+    "hero-painting-parallax"
+  ]
 }
