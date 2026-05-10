@@ -1,5 +1,5 @@
 <section
-  class="rukma-landing"
+  class="rukma-landing full-width"
   style="
     --rukma-landing-bg: {{ section.settings.background_color }};
     --rukma-landing-surface: {{ section.settings.surface_color }};
@@ -151,18 +151,29 @@
     background: var(--rukma-landing-bg, var(--color-bg));
     color: var(--color-text);
     font-family: var(--font-body);
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
+  .shopify-section:has(.rukma-landing),
   .shopify-section:has(.rukma-landing-hero),
   .shopify-section:has([class*="rukma-hero"]) {
+    width: 100% !important;
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
   }
 
+  .shopify-section:has(.rukma-landing) > .rukma-landing {
+    grid-column: 1 / -1 !important;
+  }
+
   .rukma-landing-hero {
-    width: 100vw !important;
-    max-width: 100% !important;
+    width: 100% !important;
+    max-width: none !important;
     height: 100vh !important;
     min-height: 600px !important;
     margin-left: 0 !important;
