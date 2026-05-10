@@ -49,11 +49,11 @@
               <span class="rukma-collection-listing-badge">{{ block.settings.badge | escape }}</span>
             {%- endif -%}
           </div>
-          <div class="rukma-collection-listing-info">
+          <div class="rukma-collection-listing-info" style="text-align:center; align-items:center; display:flex; flex-direction:column; width:100%;">
             <div>
-              <h2 class="rukma-collection-listing-title">{{ block.settings.title | escape }}</h2>
+              <h2 class="rukma-collection-listing-title" style="text-align:center; width:100%; display:block;">{{ block.settings.title | escape }}</h2>
               <p class="rukma-collection-listing-subtitle">{{ block.settings.subtitle | escape }}</p>
-              <p class="rukma-collection-listing-price">{{ block.settings.price | escape }}</p>
+              <p class="rukma-collection-listing-price" style="text-align:center; width:100%; display:block;">{{ block.settings.price | escape }}</p>
             </div>
           </div>
         </a>
