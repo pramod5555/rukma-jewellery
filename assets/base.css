@@ -35,6 +35,148 @@ nav, .nav, [class*="nav"],
   border-radius: 0 !important;
 }
 
+.collection-grid,
+.product-grid,
+ul.grid,
+[class*="product-grid"] {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  padding: 0 1rem;
+  margin: 0;
+  width: 100%;
+  list-style: none;
+}
+
+.card__media,
+.product-card__image-wrapper,
+[class*="card__media"] {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 0;
+}
+
+.card__media img,
+[class*="card__media"] img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.card-wrapper:hover .card__media img {
+  transform: scale(1.04);
+}
+
+.card__content,
+.card__information,
+[class*="card__information"] {
+  padding: 0.75rem 0.5rem 1.5rem;
+  text-align: center;
+  background: transparent;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.card__heading,
+.card__heading a,
+[class*="card__heading"],
+[class*="card__heading"] a {
+  display: block !important;
+  visibility: visible !important;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.55rem, 0.75vw, 0.7rem);
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #2C2420 !important;
+  margin: 0 0 0.35rem;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card__heading a:hover {
+  color: #731C28 !important;
+}
+
+.price,
+.price__regular,
+.price__sale,
+[class*="price-item"],
+[class*="price"] {
+  display: block !important;
+  visibility: visible !important;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: #8A7E76 !important;
+  margin: 0;
+  text-align: center;
+}
+
+.price--on-sale .price__regular {
+  text-decoration: line-through;
+  color: #C4A76D !important;
+}
+
+.card__badge,
+.price__badge,
+[class*="badge"] {
+  display: none !important;
+}
+
+.card__badge .badge,
+[class*="card__badge"] {
+  display: inline-block !important;
+  visibility: visible !important;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: #731C28;
+  color: #F5EDE0;
+  border-radius: 0;
+  padding: 0.2rem 0.5rem;
+}
+
+.card-wrapper,
+.grid__item,
+[class*="card-wrapper"] {
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+}
+
+@media (max-width: 1200px) {
+  .collection-grid,
+  .product-grid,
+  ul.grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .collection-grid,
+  .product-grid,
+  ul.grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .collection-grid,
+  .product-grid,
+  ul.grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 html, body {
   margin: 0;
   padding: 0;

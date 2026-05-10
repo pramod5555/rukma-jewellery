@@ -187,9 +187,9 @@
   [class*="product-grid"],
   .rukma-collection-listing-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 0;
-    padding: 0;
+    padding: 0 1rem;
     margin: 0;
     width: 100%;
     list-style: none;
@@ -204,7 +204,7 @@
     border-radius: 0;
     box-shadow: none;
     background: transparent;
-    padding: 0;
+    padding: 0.5rem;
     margin: 0;
     position: relative;
     color: var(--color-text);
@@ -230,7 +230,7 @@
   .rukma-collection-listing-media {
     position: relative;
     aspect-ratio: 2 / 3;
-    overflow: visible;
+    overflow: hidden;
     margin-bottom: 0;
     background: transparent;
     border-radius: 0;
@@ -256,7 +256,7 @@
   .card-wrapper:hover .card__media img,
   .grid__item:hover img,
   .rukma-collection-listing-card:hover .rukma-collection-listing-image {
-    transform: scale(1.03);
+    transform: scale(1.04);
   }
 
   .rukma-collection-listing-badge {
@@ -269,29 +269,63 @@
     font-size: 0.58rem;
   }
 
+  .card__badge,
+  .price__badge,
+  [class*="badge"] {
+    display: none !important;
+  }
+
+  .card__badge .badge,
+  [class*="card__badge"],
+  .rukma-collection-listing-badge {
+    display: inline-block !important;
+    visibility: visible !important;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: #731C28;
+    color: #F5EDE0;
+    border-radius: 0;
+    padding: 0.2rem 0.5rem;
+  }
+
   .card__content,
   .card__information,
   .product-card__info,
   [class*="card__information"],
   .rukma-collection-listing-info {
-    display: block;
-    padding: 1rem 1rem 2rem;
+    display: block !important;
+    visibility: visible !important;
+    padding: 0.75rem 0.5rem 1.5rem;
     text-align: center;
     background: transparent;
     border: none;
   }
 
   .card__heading,
+  .card__heading a,
   .product-card__title,
   [class*="card__heading"],
+  [class*="card__heading"] a,
   .rukma-collection-listing-title {
+    display: block !important;
+    visibility: visible !important;
     margin: 0 0 0.35rem;
     font-family: 'Nunito', sans-serif;
-    font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+    font-size: clamp(0.55rem, 0.75vw, 0.7rem);
     font-weight: 500;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: #2C2420;
+    color: #2C2420 !important;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card__heading a:hover {
+    color: #731C28 !important;
   }
 
   .rukma-collection-listing-subtitle {
@@ -299,16 +333,27 @@
   }
 
   .price,
+  .price__regular,
+  .price__sale,
   .product-card__price,
+  [class*="price-item"],
   [class*="price"],
   .rukma-collection-listing-price {
+    display: block !important;
+    visibility: visible !important;
     margin: 0;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.6rem, 0.85vw, 0.7rem);
+    font-size: clamp(0.55rem, 0.7vw, 0.65rem);
     font-weight: 300;
-    letter-spacing: 0.15em;
-    color: #8A7E76;
+    letter-spacing: 0.1em;
+    color: #8A7E76 !important;
     white-space: nowrap;
+    text-align: center;
+  }
+
+  .price--on-sale .price__regular {
+    text-decoration: line-through;
+    color: #C4A76D !important;
   }
 
   .rukma-collection-listing-pagination {
@@ -340,7 +385,16 @@
     }
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
+    .collection-grid,
+    .product-grid,
+    ul.grid,
+    .rukma-collection-listing-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
     .collection-grid,
     .product-grid,
     ul.grid,
@@ -349,7 +403,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     .collection-grid,
     .product-grid,
     ul.grid,
