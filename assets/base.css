@@ -26,6 +26,15 @@ nav, .nav, [class*="nav"],
   font-size: 0.75rem;
 }
 
+.card--product,
+.card--product *,
+.card-wrapper,
+.card-wrapper * {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
 html, body {
   margin: 0;
   padding: 0;

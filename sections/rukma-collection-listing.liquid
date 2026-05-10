@@ -83,23 +83,26 @@
     background: var(--rukma-collection-bg, var(--color-bg));
     color: var(--color-text);
     font-family: var(--font-body);
-    padding: 8rem var(--page-margin);
+    padding: 0;
   }
 
   .rukma-collection-listing-header,
   .rukma-collection-listing-grid,
   .rukma-collection-listing-pagination {
-    max-width: var(--page-width);
-    margin-left: auto;
-    margin-right: auto;
+    max-width: none;
   }
 
-  .rukma-collection-listing-header {
+  .collection-hero,
+  .collection__title-wrapper,
+  .rukma-collection-listing-header,
+  [class*="collection-hero"] {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-    margin-bottom: 5rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2.5rem 2.5rem 1rem;
+    border-bottom: none;
+    margin: 0;
   }
 
   .rukma-collection-listing-breadcrumb,
@@ -114,68 +117,136 @@
   }
 
   .rukma-collection-listing-breadcrumb {
-    margin: 0 0 1rem;
+    margin: 0;
     font-size: 0.62rem;
-    color: var(--color-text-secondary);
+    color: #8A7E76;
   }
 
+  .collection__title,
+  .collection-hero__title,
+  h1.collection-title,
   .rukma-collection-listing-heading {
     margin: 0;
-    font-family: var(--font-heading);
-    font-weight: 300;
-    font-size: clamp(3.5rem, 8vw, 8rem);
-    line-height: 0.95;
-    color: var(--rukma-collection-accent, var(--color-velvet));
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(0.7rem, 1vw, 0.85rem);
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #8A7E76;
   }
 
-  .rukma-collection-listing-filter {
+  .rukma-collection-listing-heading p {
+    margin: 0;
+  }
+
+  .rukma-collection-listing-heading br {
+    display: none;
+  }
+
+  .facets-container,
+  .collection-filters,
+  .rukma-collection-listing-filter,
+  [class*="facets"] {
     display: inline-flex;
     align-items: center;
-    gap: 1rem;
-    border: 0;
-    background: var(--rukma-collection-surface, var(--color-surface));
-    color: var(--color-text);
-    padding: 0.95rem 1.4rem;
-    font-size: 0.7rem;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    border-top: 1px solid rgba(44, 36, 32, 0.1);
+    border-bottom: 1px solid rgba(44, 36, 32, 0.1);
+    border-left: 0;
+    border-right: 0;
+    background: transparent;
+    margin-bottom: 0;
     cursor: pointer;
   }
 
-  .rukma-collection-listing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5rem 2rem;
+  [class*="facets__summary"],
+  [class*="sort-by"],
+  .rukma-collection-listing-filter {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #8A7E76;
   }
 
+  .collection-grid,
+  .product-grid,
+  ul.grid,
+  [class*="product-grid"],
+  .rukma-collection-listing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    list-style: none;
+  }
+
+  .card-wrapper,
+  .product-card,
+  .grid__item,
+  [class*="card-wrapper"],
   .rukma-collection-listing-card {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    position: relative;
     color: var(--color-text);
   }
 
   .rukma-collection-listing-card-featured {
-    grid-column: span 2;
+    grid-column: auto;
   }
 
+  .card,
+  .product-card__inner,
+  [class*="card--product"] {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  .card__media,
+  .product-card__image-wrapper,
+  [class*="card__media"],
   .rukma-collection-listing-media {
     position: relative;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    background: var(--rukma-collection-surface, var(--color-surface));
+    aspect-ratio: 2 / 3;
+    overflow: visible;
+    margin-bottom: 0;
+    background: transparent;
+    border-radius: 0;
   }
 
   .rukma-collection-listing-media-featured {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 2 / 3;
   }
 
+  .card__media img,
+  .product-card__image,
+  [class*="card__media"] img,
   .rukma-collection-listing-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: bottom center;
     display: block;
-    transition: transform 0.7s ease;
+    transition: transform 0.5s ease;
+    background: transparent;
   }
 
+  .card-wrapper:hover .card__media img,
+  .grid__item:hover img,
   .rukma-collection-listing-card:hover .rukma-collection-listing-image {
-    transform: scale(1.04);
+    transform: scale(1.03);
   }
 
   .rukma-collection-listing-badge {
@@ -188,29 +259,45 @@
     font-size: 0.58rem;
   }
 
+  .card__content,
+  .card__information,
+  .product-card__info,
+  [class*="card__information"],
   .rukma-collection-listing-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
+    display: block;
+    padding: 1rem 1rem 2rem;
+    text-align: center;
+    background: transparent;
+    border: none;
   }
 
+  .card__heading,
+  .product-card__title,
+  [class*="card__heading"],
   .rukma-collection-listing-title {
     margin: 0 0 0.35rem;
-    font-family: var(--font-heading);
-    font-weight: 300;
-    font-size: 1.45rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #2C2420;
   }
 
   .rukma-collection-listing-subtitle {
-    margin: 0;
-    font-size: 0.68rem;
-    color: var(--color-text-secondary);
+    display: none;
   }
 
+  .price,
+  .product-card__price,
+  [class*="price"],
   .rukma-collection-listing-price {
     margin: 0;
-    color: var(--rukma-collection-accent, var(--color-velvet));
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.6rem, 0.85vw, 0.7rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: #8A7E76;
     white-space: nowrap;
   }
 
@@ -239,20 +326,26 @@
 
   @media (max-width: 900px) {
     .rukma-collection-listing-header {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .rukma-collection-listing-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: center;
+      flex-direction: row;
     }
   }
 
-  @media (max-width: 640px) {
-    .rukma-collection-listing-grid,
-    .rukma-collection-listing-card-featured {
-      grid-template-columns: 1fr;
-      grid-column: auto;
+  @media (max-width: 1024px) {
+    .collection-grid,
+    .product-grid,
+    ul.grid,
+    .rukma-collection-listing-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-grid,
+    .product-grid,
+    ul.grid,
+    .rukma-collection-listing-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 {% endstylesheet %}
