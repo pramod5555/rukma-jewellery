@@ -79,6 +79,7 @@ ul.grid,
   flex-direction: column !important;
   align-items: center !important;
   justify-content: flex-start !important;
+  text-align: center !important;
   width: 100% !important;
   padding: 1rem 0.5rem 1.5rem !important;
   box-sizing: border-box !important;
@@ -122,6 +123,8 @@ ul.grid,
   color: #2C2420 !important;
   text-decoration: none !important;
   text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   line-height: 1.7 !important;
   width: 100% !important;
   order: 2 !important;
