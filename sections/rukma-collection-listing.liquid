@@ -98,13 +98,13 @@
   .collection-header,
   [class*="collection-hero"],
   [class*="collection-header"] {
-    padding: 2.5rem 2.5rem 1rem;
-    text-align: left;
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 2.5rem 2.5rem 1.5rem;
     width: 100%;
-    float: none;
-    justify-content: flex-start;
-    border-bottom: none;
+    border-bottom: 1px solid rgba(44, 36, 32, 0.1);
     margin: 0;
   }
 
@@ -161,14 +161,11 @@
   .rukma-collection-listing-filter,
   [class*="facets"] {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-end;
     gap: 0.75rem;
-    padding: 1rem 2.5rem;
-    border-top: 1px solid rgba(44, 36, 32, 0.1);
-    border-bottom: 1px solid rgba(44, 36, 32, 0.1);
-    border-left: 0;
-    border-right: 0;
+    padding: 0;
+    border: none;
     background: transparent;
     margin-bottom: 0;
     cursor: pointer;
