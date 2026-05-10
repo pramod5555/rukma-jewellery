@@ -15,43 +15,60 @@
         "product-1": {
           "type": "product",
           "settings": {
+            "image": "shopify://shop_images/156291-ring-jewellery-png-image-high-quality.png",
             "featured": true,
             "badge": "New",
             "title": "Mandala Heritage Choker",
             "subtitle": "Gold & Burmese Rubies",
-            "price": "$4,250"
+            "price": "$4,250",
+            "link": ""
           }
         },
         "product-2": {
           "type": "product",
           "settings": {
+            "image": "shopify://shop_images/156291-ring-jewellery-png-image-high-quality.png",
+            "featured": false,
+            "badge": "",
             "title": "Lotus Bloom Studs",
             "subtitle": "22k Gold & Basra Pearl",
-            "price": "$890"
+            "price": "$890",
+            "link": ""
           }
         },
         "product-3": {
           "type": "product",
           "settings": {
+            "image": "shopify://shop_images/156291-ring-jewellery-png-image-high-quality.png",
+            "featured": false,
+            "badge": "",
             "title": "Vayu Kada Bracelet",
             "subtitle": "Gold & Zambian Emerald",
-            "price": "$1,550"
+            "price": "$1,550",
+            "link": ""
           }
         },
         "product-4": {
           "type": "product",
           "settings": {
+            "image": "shopify://shop_images/156291-ring-jewellery-png-image-high-quality.png",
+            "featured": false,
+            "badge": "",
             "title": "Prithvi Uncut Ring",
             "subtitle": "Polki Diamond",
-            "price": "$2,100"
+            "price": "$2,100",
+            "link": ""
           }
         },
         "product-5": {
           "type": "product",
           "settings": {
+            "featured": false,
+            "badge": "",
             "title": "Akasha Pendant",
             "subtitle": "Satin Finish Gold",
-            "price": "$1,200"
+            "price": "$1,200",
+            "link": ""
           }
         }
       },
@@ -68,9 +85,10 @@
         "filter_label": "Filter & Sort",
         "count_label": "Showing 7 of 42 Items",
         "load_more_label": "Load More Pieces",
-        "background_color": "#F5EDE0",
-        "surface_color": "#EDE6D8",
-        "accent_color": "#731C28"
+        "load_more_link": "",
+        "background_color": "#f5ede0",
+        "surface_color": "#ede6d8",
+        "accent_color": "#731c28"
       }
     }
   },
