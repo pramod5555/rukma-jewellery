@@ -35,7 +35,7 @@
           <div class="rukma-collection-listing-media">
             {%- if block.settings.image -%}
               <img
-                src="{{ block.settings.image | img_url: '1400x' }}"
+                src="{{ block.settings.image | image_url: width: 1400 }}"
                 alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
                 class="rukma-collection-listing-image"
                 width="1400"
@@ -49,9 +49,9 @@
               <span class="rukma-collection-listing-badge">{{ block.settings.badge | escape }}</span>
             {%- endif -%}
           </div>
-          <div class="rukma-collection-listing-info">
-            <p class="rukma-collection-listing-price">{{ block.settings.price | escape }}</p>
-            <h2 class="rukma-collection-listing-title">{{ block.settings.title | escape }}</h2>
+          <div class="rukma-collection-listing-info" style="display:flex; flex-direction:column; align-items:center; width:100%; text-align:center; gap:0;">
+            <p class="rukma-collection-listing-price" style="display:block; width:100%; text-align:center; margin:0 0 0.35rem 0; line-height:1.4; position:static; clear:both; flex:0 0 auto;">{{ block.settings.price | escape }}</p>
+            <h2 class="rukma-collection-listing-title" style="display:block; width:100%; text-align:center; margin:0; line-height:1.7; clear:both; position:static; flex:0 0 auto;">{{ block.settings.title | escape }}</h2>
           </div>
         </a>
       {%- endif -%}
