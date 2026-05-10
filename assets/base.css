@@ -26,6 +26,83 @@ nav, .nav, [class*="nav"],
   font-size: 0.75rem;
 }
 
+.site-header nav a,
+.site-header .nav-link,
+header nav a,
+[class*="header__nav"] a,
+[class*="site-nav"] a,
+[class*="nav__link"],
+.rukma-header__nav-link {
+  position: relative !important;
+  text-decoration: none !important;
+  padding-bottom: 2px !important;
+  opacity: 0.85 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.site-header nav a::after,
+.site-header .nav-link::after,
+header nav a::after,
+[class*="header__nav"] a::after,
+[class*="site-nav"] a::after,
+[class*="nav__link"]::after,
+.rukma-header__nav-link::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: -2px !important;
+  left: 0 !important;
+  width: 0 !important;
+  height: 1px !important;
+  background: currentColor !important;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.site-header nav a:hover,
+header nav a:hover,
+[class*="header__nav"] a:hover,
+[class*="nav__link"]:hover,
+.rukma-header__nav-link:hover {
+  opacity: 1 !important;
+}
+
+.site-header nav a:hover::after,
+.site-header .nav-link:hover::after,
+header nav a:hover::after,
+[class*="header__nav"] a:hover::after,
+[class*="site-nav"] a:hover::after,
+[class*="nav__link"]:hover::after,
+.rukma-header__nav-link:hover::after {
+  width: 100% !important;
+}
+
+.template-page-rukma-landing .rukma-header:not(.scrolled) nav a::after,
+.page-home .rukma-header:not(.scrolled) nav a::after {
+  background: #F5EDE0 !important;
+}
+
+.rukma-header.scrolled nav a::after,
+.rukma-header nav a::after,
+.site-header.scrolled nav a::after,
+.site-header nav a::after {
+  background: #731C28 !important;
+}
+
+.site-header [class*="logo"],
+.site-header [class*="header__heading"],
+header .logo,
+.rukma-header__logo,
+.rukma-header__logo-mark,
+.rukma-header__logo-text {
+  transition: opacity 0.2s ease !important;
+  opacity: 1 !important;
+}
+
+.site-header [class*="logo"]:hover,
+header .logo:hover,
+.rukma-header__logo:hover {
+  opacity: 0.75 !important;
+}
+
 .card--product,
 .card--product *,
 .card-wrapper,
