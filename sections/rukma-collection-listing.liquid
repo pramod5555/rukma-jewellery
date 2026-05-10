@@ -299,16 +299,16 @@
   .product-card__info,
   [class*="card__information"],
   .rukma-collection-listing-info {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0;
+    display: grid !important;
+    grid-template-rows: auto auto;
+    align-items: start;
+    justify-items: center;
+    row-gap: 0.55rem;
     visibility: visible !important;
-    padding: 0.9rem 0.75rem 1.9rem;
+    padding: 0.95rem 0.75rem 1.9rem;
     text-align: center;
     width: 100%;
-    min-height: 6.25rem;
+    min-height: 6.75rem;
     overflow: hidden;
     background: transparent;
     border: none;
@@ -316,6 +316,7 @@
 
   .rukma-collection-listing-info > div {
     display: block;
+    grid-row: 1;
     width: 100%;
     min-height: 0;
     margin: 0;
@@ -345,7 +346,7 @@
     overflow: hidden;
     line-height: 1.45;
     max-width: 24ch;
-    min-height: 2.8rem;
+    min-height: 0;
   }
 
   .card__heading a:hover {
@@ -366,11 +367,11 @@
   .rukma-collection-listing-price {
     display: block !important;
     visibility: visible !important;
+    grid-row: 2;
     width: 100%;
-    margin: 0.45rem 0 0;
+    margin: 0;
     position: static !important;
     clear: both;
-    flex: 0 0 auto;
     font-family: 'Inter', sans-serif;
     font-size: 0.64rem;
     font-weight: 300;
