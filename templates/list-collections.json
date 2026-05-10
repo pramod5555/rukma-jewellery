@@ -15,19 +15,25 @@
         "category-1": {
           "type": "category",
           "settings": {
-            "label": "Heritage"
+            "image": "shopify://shop_images/gb-24966_005.jpg",
+            "label": "Heritage",
+            "url": ""
           }
         },
         "category-2": {
           "type": "category",
           "settings": {
-            "label": "Men"
+            "image": "shopify://shop_images/menjewelplaceholder.webp",
+            "label": "Men",
+            "url": ""
           }
         },
         "category-3": {
           "type": "category",
           "settings": {
-            "label": "Women"
+            "image": "shopify://shop_images/wjp.avif",
+            "label": "Women",
+            "url": ""
           }
         }
       },
