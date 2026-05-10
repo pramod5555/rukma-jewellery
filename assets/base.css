@@ -96,20 +96,20 @@ ul.grid,
   visibility: visible !important;
   width: 100%;
   font-family: 'Nunito', sans-serif;
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0;
   text-transform: uppercase;
-  color: #2C2420 !important;
+  color: #111111 !important;
   margin: 0;
   text-decoration: none;
   text-align: center;
   white-space: normal;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow-wrap: normal;
   overflow: hidden;
-  line-height: 1.45;
-  max-width: 24ch;
+  line-height: 1.2;
+  max-width: 16ch;
   min-height: 0;
 }
 
@@ -150,7 +150,7 @@ ul.grid,
   transform: none !important;
   clear: both;
   font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
   font-weight: 400;
   letter-spacing: 0;
   color: #00613f !important;
@@ -167,7 +167,7 @@ ul.grid,
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.35rem;
   width: 100%;
 }
 
