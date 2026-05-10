@@ -53,8 +53,8 @@
             <div>
               <h2 class="rukma-collection-listing-title">{{ block.settings.title | escape }}</h2>
               <p class="rukma-collection-listing-subtitle">{{ block.settings.subtitle | escape }}</p>
+              <p class="rukma-collection-listing-price">{{ block.settings.price | escape }}</p>
             </div>
-            <p class="rukma-collection-listing-price">{{ block.settings.price | escape }}</p>
           </div>
         </a>
       {%- endif -%}
@@ -314,11 +314,7 @@
   }
 
   .rukma-collection-listing-info {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0;
+    display: block !important;
     visibility: visible !important;
     padding: 0.95rem 0.75rem 1.9rem;
     text-align: center;
@@ -330,8 +326,10 @@
   }
 
   .rukma-collection-listing-info > div {
-    display: block;
-    order: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
     width: 100%;
     min-height: 0;
     margin: 0;
@@ -399,20 +397,18 @@
   .rukma-collection-listing-price {
     display: block !important;
     visibility: visible !important;
-    order: 2;
     width: 100%;
-    margin: 0.65rem 0 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
     position: static !important;
     inset: auto !important;
     transform: none !important;
     clear: both;
-    flex: 0 0 auto;
     font-family: 'Inter', sans-serif;
-    font-size: 0.64rem;
-    font-weight: 300;
-    letter-spacing: 0.04em;
-    color: #8A7E76 !important;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #00613f !important;
     white-space: nowrap;
     text-align: center;
     line-height: 1.4;
