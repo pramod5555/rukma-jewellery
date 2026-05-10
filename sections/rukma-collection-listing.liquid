@@ -314,17 +314,16 @@
   }
 
   .rukma-collection-listing-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    visibility: visible !important;
-    padding: 0.6rem 0.6rem 1rem;
-    text-align: center;
-    width: 100%;
-    min-height: 4.5rem;
-    overflow: hidden;
-    background: transparent;
-    border: none;
+    all: unset;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    padding: 1rem 0.5rem 1.5rem !important;
+    box-sizing: border-box !important;
+    min-height: 5rem !important;
+    gap: 0.4rem !important;
   }
 
   .rukma-collection-listing-info > div {
@@ -344,35 +343,23 @@
   [class*="card__heading"],
   [class*="card__heading"] a,
   .rukma-collection-listing-title {
+    all: unset;
     display: -webkit-box !important;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    visibility: visible !important;
-    order: 2;
-    width: 100%;
-    margin: 0;
-    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-    font-size: clamp(0.6rem, 0.8vw, 0.72rem);
-    font-weight: 400;
-    font-style: normal;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.58rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
     color: #2C2420 !important;
-    -webkit-text-fill-color: #2C2420 !important;
     text-decoration: none !important;
-    text-align: center;
-    white-space: normal !important;
-    word-break: break-word;
-    overflow: hidden;
-    text-overflow: unset !important;
-    line-height: 1.6;
-    max-width: 100%;
-    min-height: 0;
-  }
-
-  .card__heading a:hover {
-    color: #731C28 !important;
-    -webkit-text-fill-color: #731C28 !important;
+    text-align: center !important;
+    line-height: 1.7 !important;
+    width: 100% !important;
+    order: 2 !important;
+    cursor: pointer !important;
   }
 
   .rukma-collection-listing-subtitle {
@@ -380,56 +367,33 @@
   }
 
   .price,
+  .price__container,
   .price__regular,
-  .price__sale,
   .price-item,
   .price-item--regular,
-  .product-card__price,
   [class*="price-item"],
-  [class*="price"],
+  [class*="price__regular"],
   .rukma-collection-listing-price {
+    all: unset;
     display: block !important;
-    visibility: visible !important;
-    order: 1;
-    width: 100%;
-    margin: 0 0 0.25rem !important;
-    padding: 0 !important;
-    position: static !important;
-    inset: auto !important;
-    transform: none !important;
-    clear: both;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 300;
-    letter-spacing: 0.06em;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.58rem !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.06em !important;
     color: #8A7E76 !important;
-    -webkit-text-fill-color: #8A7E76 !important;
-    white-space: nowrap;
-    text-align: center;
-    line-height: 1.4;
+    text-align: center !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    order: 1 !important;
   }
 
-  .price *,
-  [class*="price-item"] * {
-    color: #8A7E76 !important;
-    -webkit-text-fill-color: #8A7E76 !important;
-  }
-
-  .price__sale .price-item--sale {
-    color: #8A7E76 !important;
-    -webkit-text-fill-color: #8A7E76 !important;
-  }
-
-  .price--on-sale .price__regular {
-    text-decoration: line-through;
-    color: #8A7E76 !important;
-    -webkit-text-fill-color: #8A7E76 !important;
-  }
-
+  .card__information .badge,
+  .card__information [class*="badge"],
+  .card__information [class*="vendor"],
+  .card__information [class*="compare"],
+  .card__information [class*="unit"],
   .price__sale .price-item--regular,
-  .price__badges,
-  [class*="price__badges"],
-  .badge--sale {
+  [class*="price__badges"] {
     display: none !important;
   }
 
