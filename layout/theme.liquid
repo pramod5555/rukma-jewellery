@@ -112,6 +112,58 @@
         color: #2C2420 !important;
         stroke: #2C2420 !important;
       }
+
+      .rukma-header__nav-link,
+      .rukma-nav-overlay__link {
+        position: relative !important;
+        text-decoration: none !important;
+        padding-bottom: 2px !important;
+        opacity: 0.85 !important;
+        transition: opacity 0.2s ease, color 0.2s ease !important;
+      }
+
+      .rukma-header__nav-link::after,
+      .rukma-nav-overlay__link::after {
+        content: '' !important;
+        position: absolute !important;
+        bottom: -2px !important;
+        left: 0 !important;
+        width: 0 !important;
+        height: 1px !important;
+        background: currentColor !important;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      }
+
+      .rukma-header__nav-link:hover,
+      .rukma-nav-overlay__link:hover {
+        opacity: 1 !important;
+      }
+
+      .rukma-header__nav-link:hover::after,
+      .rukma-nav-overlay__link:hover::after {
+        width: 100% !important;
+      }
+
+      .page-home .rukma-header:not(.scrolled) .rukma-header__nav-link::after,
+      .template-page-rukma-landing .rukma-header:not(.scrolled) .rukma-header__nav-link::after {
+        background: #F5EDE0 !important;
+      }
+
+      .rukma-header.scrolled .rukma-header__nav-link::after,
+      .rukma-header .rukma-header__nav-link::after {
+        background: #731C28 !important;
+      }
+
+      .rukma-header__logo,
+      .rukma-header__logo-mark,
+      .rukma-header__logo-text {
+        transition: opacity 0.2s ease !important;
+        opacity: 1 !important;
+      }
+
+      .rukma-header__logo:hover {
+        opacity: 0.75 !important;
+      }
     </style>
 
     {{ content_for_layout }}
