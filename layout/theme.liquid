@@ -30,17 +30,72 @@
     {{ content_for_header }}
   </head>
 
-  <body class="template--{{ template.name }}">
+  <body class="template--{{ template.name }}{% if page %} page-{{ page.handle }}{% endif %}{% if template.suffix != blank %} template-page-{{ template.suffix }}{% endif %}">
     {% sections 'header-group' %}
 
     <style>
       main, .main-content, .page-width, #MainContent {
         overflow-x: hidden;
       }
+
+      /* Transparent navbar -- only on landing/home page */
+      .page-home .rukma-header,
+      .page-home header,
+      .template-page-rukma-landing .rukma-header,
+      .template-page-rukma-landing header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 100 !important;
+        background: transparent !important;
+        border-bottom: none !important;
+        transition: background 0.4s ease, border-color 0.4s ease !important;
+      }
+
+      .page-home .rukma-header.scrolled,
+      .template-page-rukma-landing .rukma-header.scrolled {
+        background: #F5EDE0 !important;
+        border-bottom: 1px solid rgba(44, 36, 32, 0.08) !important;
+      }
+
+      .page-home .rukma-header:not(.scrolled) a,
+      .page-home .rukma-header:not(.scrolled) .rukma-header__nav-link,
+      .template-page-rukma-landing .rukma-header:not(.scrolled) a,
+      .template-page-rukma-landing .rukma-header:not(.scrolled) .rukma-header__nav-link {
+        color: #F5EDE0 !important;
+      }
+
+      .page-home .rukma-header:not(.scrolled) .rukma-header__logo-mark img,
+      .template-page-rukma-landing .rukma-header:not(.scrolled) .rukma-header__logo-mark img {
+        filter: brightness(0) invert(1) !important;
+      }
     </style>
 
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}
+
+    <script>
+      (function() {
+        var header = document.querySelector('.rukma-header, .site-header, header.header');
+        if (!header) return;
+
+        var isLanding = document.body.classList.contains('page-home') ||
+          document.body.classList.contains('template-page-rukma-landing');
+        if (!isLanding) return;
+
+        function onScroll() {
+          if (window.scrollY > 40) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
   </body>
 </html>
