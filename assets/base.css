@@ -74,10 +74,15 @@ ul.grid,
 .card__content,
 .card__information,
 [class*="card__information"] {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
   padding: 0.75rem 0.5rem 1.5rem;
   text-align: center;
+  width: 100%;
+  overflow: hidden;
   background: transparent;
-  display: block !important;
   visibility: visible !important;
 }
 
@@ -87,17 +92,20 @@ ul.grid,
 [class*="card__heading"] a {
   display: block !important;
   visibility: visible !important;
+  width: 100%;
   font-family: 'Nunito', sans-serif;
-  font-size: clamp(0.55rem, 0.75vw, 0.7rem);
+  font-size: 0.6rem;
   font-weight: 500;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #2C2420 !important;
-  margin: 0 0 0.35rem;
+  margin: 0;
   text-decoration: none;
-  white-space: nowrap;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
   overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.5;
 }
 
 .card__heading a:hover {
@@ -105,14 +113,16 @@ ul.grid,
 }
 
 .price,
+.price__container,
 .price__regular,
 .price__sale,
 [class*="price-item"],
 [class*="price"] {
   display: block !important;
   visibility: visible !important;
+  width: 100%;
   font-family: 'Inter', sans-serif;
-  font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+  font-size: 0.6rem;
   font-weight: 300;
   letter-spacing: 0.1em;
   color: #8A7E76 !important;
@@ -135,6 +145,10 @@ ul.grid,
 [class*="card__badge"] {
   display: inline-block !important;
   visibility: visible !important;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
   font-family: 'Nunito', sans-serif;
   font-size: 0.55rem;
   letter-spacing: 0.2em;
@@ -149,6 +163,11 @@ ul.grid,
 .grid__item,
 [class*="card-wrapper"] {
   padding: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
   border: none;
   background: transparent;
 }
