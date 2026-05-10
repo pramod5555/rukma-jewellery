@@ -205,6 +205,51 @@ ul.grid,
   background: transparent;
 }
 
+.rukma-collection-listing-media,
+.rukma-collection-listing-media-featured {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.rukma-collection-listing-media img,
+.rukma-collection-listing-media-featured img {
+  display: block !important;
+  margin: 0 auto !important;
+  object-position: center center !important;
+}
+
+.rukma-collection-listing-card,
+.rukma-collection-listing-card-featured {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.rukma-collection-listing-info {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+
+.rukma-collection-listing-title {
+  text-align: center !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.rukma-collection-listing-price {
+  text-align: center !important;
+  width: 100% !important;
+}
+
 @media (max-width: 1200px) {
   .collection-grid,
   .product-grid,
