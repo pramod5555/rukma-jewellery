@@ -329,7 +329,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0;
     width: 100%;
     min-height: 0;
     margin: 0;
@@ -337,33 +337,36 @@
 
   .card__heading,
   .card__heading a,
+  .card__heading h3,
   .product-card__title,
   [class*="card__heading"],
   [class*="card__heading"] a,
   .rukma-collection-listing-title {
     display: block !important;
     visibility: visible !important;
+    order: 2;
     width: 100%;
     margin: 0;
     font-family: 'Nunito', sans-serif;
-    font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-    font-weight: 600;
-    letter-spacing: 0;
+    font-size: 0.58rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #111111 !important;
-    text-decoration: none;
+    color: #2C2420 !important;
+    -webkit-text-fill-color: #2C2420 !important;
+    text-decoration: none !important;
     text-align: center;
-    white-space: normal;
-    word-break: normal;
-    overflow-wrap: normal;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
     line-height: 1.2;
-    max-width: 16ch;
+    max-width: 100%;
     min-height: 0;
   }
 
   .card__heading a:hover {
     color: #731C28 !important;
+    -webkit-text-fill-color: #731C28 !important;
   }
 
   .rukma-collection-listing-subtitle {
@@ -371,52 +374,57 @@
   }
 
   .price,
-  .price__container,
   .price__regular,
   .price__sale,
+  .price-item,
+  .price-item--regular,
   .product-card__price,
   [class*="price-item"],
-  [class*="price"] {
-    display: block !important;
-    visibility: visible !important;
-    grid-row: 2;
-    width: 100%;
-    margin: 0;
-    position: static !important;
-    clear: both;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.64rem;
-    font-weight: 300;
-    letter-spacing: 0.04em;
-    color: #8A7E76 !important;
-    white-space: nowrap;
-    text-align: center;
-    line-height: 1.4;
-  }
-
+  [class*="price"],
   .rukma-collection-listing-price {
     display: block !important;
     visibility: visible !important;
+    order: 1;
     width: 100%;
-    margin: 0 !important;
+    margin: 0 0 0.25rem !important;
     padding: 0 !important;
     position: static !important;
     inset: auto !important;
     transform: none !important;
     clear: both;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-    font-weight: 400;
-    letter-spacing: 0;
-    color: #00613f !important;
+    font-size: 0.62rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: #8A7E76 !important;
+    -webkit-text-fill-color: #8A7E76 !important;
     white-space: nowrap;
     text-align: center;
     line-height: 1.4;
   }
 
+  .price *,
+  [class*="price-item"] * {
+    color: #8A7E76 !important;
+    -webkit-text-fill-color: #8A7E76 !important;
+  }
+
+  .price__sale .price-item--sale {
+    color: #8A7E76 !important;
+    -webkit-text-fill-color: #8A7E76 !important;
+  }
+
   .price--on-sale .price__regular {
     text-decoration: line-through;
-    color: #C4A76D !important;
+    color: #8A7E76 !important;
+    -webkit-text-fill-color: #8A7E76 !important;
+  }
+
+  .price__sale .price-item--regular,
+  .price__badges,
+  [class*="price__badges"],
+  .badge--sale {
+    display: none !important;
   }
 
   .card-wrapper,
