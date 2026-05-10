@@ -95,14 +95,24 @@
   .collection-hero,
   .collection__title-wrapper,
   .rukma-collection-listing-header,
-  [class*="collection-hero"] {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1.5rem;
+  .collection-header,
+  [class*="collection-hero"],
+  [class*="collection-header"] {
     padding: 2.5rem 2.5rem 1rem;
+    text-align: left;
+    display: block;
+    width: 100%;
+    float: none;
+    justify-content: flex-start;
     border-bottom: none;
     margin: 0;
+  }
+
+  .collection__title-wrapper {
+    order: -1;
+    align-self: flex-start;
+    justify-self: flex-start;
+    margin-right: auto;
   }
 
   .rukma-collection-listing-breadcrumb,
@@ -125,12 +135,15 @@
   .collection__title,
   .collection-hero__title,
   h1.collection-title,
+  [class*="collection__title"],
   .rukma-collection-listing-heading {
+    text-align: left;
     margin: 0;
+    float: none;
     font-family: 'Nunito', sans-serif;
     font-size: clamp(0.7rem, 1vw, 0.85rem);
     font-weight: 500;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: #8A7E76;
   }
@@ -327,7 +340,6 @@
   @media (max-width: 900px) {
     .rukma-collection-listing-header {
       align-items: center;
-      flex-direction: row;
     }
   }
 
