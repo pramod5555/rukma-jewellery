@@ -297,8 +297,7 @@
   .card__content,
   .card__information,
   .product-card__info,
-  [class*="card__information"],
-  .rukma-collection-listing-info {
+  [class*="card__information"] {
     display: grid !important;
     grid-template-rows: auto auto;
     align-items: start;
@@ -314,9 +313,25 @@
     border: none;
   }
 
+  .rukma-collection-listing-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    visibility: visible !important;
+    padding: 0.95rem 0.75rem 1.9rem;
+    text-align: center;
+    width: 100%;
+    min-height: 6.75rem;
+    overflow: hidden;
+    background: transparent;
+    border: none;
+  }
+
   .rukma-collection-listing-info > div {
     display: block;
-    grid-row: 1;
+    order: 1;
     width: 100%;
     min-height: 0;
     margin: 0;
@@ -363,8 +378,7 @@
   .price__sale,
   .product-card__price,
   [class*="price-item"],
-  [class*="price"],
-  .rukma-collection-listing-price {
+  [class*="price"] {
     display: block !important;
     visibility: visible !important;
     grid-row: 2;
@@ -372,6 +386,28 @@
     margin: 0;
     position: static !important;
     clear: both;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.64rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: #8A7E76 !important;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .rukma-collection-listing-price {
+    display: block !important;
+    visibility: visible !important;
+    order: 2;
+    width: 100%;
+    margin: 0.65rem 0 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    clear: both;
+    flex: 0 0 auto;
     font-family: 'Inter', sans-serif;
     font-size: 0.64rem;
     font-weight: 300;

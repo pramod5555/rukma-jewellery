@@ -139,6 +139,28 @@ ul.grid,
   line-height: 1.4;
 }
 
+.rukma-collection-listing-price {
+  display: block !important;
+  visibility: visible !important;
+  order: 2;
+  width: 100%;
+  margin: 0.65rem 0 0 !important;
+  padding: 0 !important;
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  clear: both;
+  flex: 0 0 auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: #8A7E76 !important;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1.4;
+}
+
 .price--on-sale .price__regular {
   text-decoration: line-through;
   color: #C4A76D !important;
